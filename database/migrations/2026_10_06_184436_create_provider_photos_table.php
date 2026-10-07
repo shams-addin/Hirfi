@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('provider_photos', function (Blueprint $table) {
             $table->foreignId('provider_id')->constrained(table: 'providers', column: 'provider_id');
-            $table->integer('pic_number', autoIncrement: true);
+            $table->unsignedInteger('pic_number');
             $table->string('pic');
             $table->primary(['provider_id', 'pic_number']);
         });
