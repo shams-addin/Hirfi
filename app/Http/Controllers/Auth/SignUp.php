@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Provider;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -33,7 +34,7 @@ class SignUp extends Controller
             'serviceType' => ['required_if:accounType,provider', 'string', 'exists:categories,category_name']
         ],[
             'firstName.required' => 'حقل الأسم مطلوب',
-            'birth_date' => 'حقل تاريخ الميلاد مطلوب',
+            'birth_date.required' => 'حقل تاريخ الميلاد مطلوب',
             'password.required' => 'حقل كلمة المرور مطلوب',
             'password.min:8' => 'يجب أن يكون عدد الأحرف أكثر من 8',
             'password.confirmed' => 'كلمة المرور غير متطابقة',
@@ -44,56 +45,33 @@ class SignUp extends Controller
 
             'accountType.required' => 'أختر نوع الحساب',
 
-            'serviceType' => 'أختر نوع الخدمة'
+            'serviceType.required' => 'أختر نوع الخدمة'
         ]);
 
-        try {
+        // try {
             // Create the user
-        DB::transaction(function() use ($validated) {
+        // DB::transaction(function() use ($validated) {
             $user = User::create([
                 'first_name' => $validated['first_name'],
                 'last_name' => $validated['last_name'] ?? null,
-                'age' => $validated['birth_date'],
+                'birth_date' => $validated['birth_date'],
                 'pass_key' => Hash::make($validated['pass_key']),
                 'phone' => $validated['phone'],
+                'address' => $validated['address'],
                 'nationality' => $validated['nationality']
             ]);
 
-            $user->address()->create([
-                // 'user_id' => $user->user_id,
-                'user_address' => $validated['address']
-            ]);
-
-            if ($validated['accountType'] === 'customer') {
-                
-                $user->customer()->create([]);
-            }
-
             if ($validated['accountType'] === 'provider') {
-                    
-                $category = Category::where('category_name', $validated['serviceType'])->firsOrFail();
-                $user->provider()->create([
-                    'category_id' =>  $category->category_id
-                ]);
+                   $provider = Provider::create([]);
+                // $category = Category::where('category_name', $validated['serviceType'])->firsOrFail();
+                // $user->provider()->create([
+                //     'category_id' =>  $category->category_id
+                // ]);
             }
 
             // Log them in
             Auth::login($user, true);
             return redirect()->route('home');
-            
-        });
-        } catch (\Illuminate\Database\QueryException $q) {
-            report($q);
-            return back()->withErrors([
-                'general' => 'جدث خطأ أثناء إنشاء الحساب، حاول مرة أخرى',
-            ]);
-
-        } catch (\Throwable $th) {
-            report($th);
-            return back()->withErrors([
-                'general' => 'جدث خطأ غير متوقع',
-            ]);
-        }
         
         
     }

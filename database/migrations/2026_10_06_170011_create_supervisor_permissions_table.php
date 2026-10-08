@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('supervisor_permissions', function (Blueprint $table) {
             $table->foreignId('supervisor_id')->constrained(table: 'supervisors', column: 'supervisor_id');
             $table->foreignId('permission_id')->constrained(table: 'permissions', column: 'permission_id');
-            $table->date('grant_date');
+            $table->timestamp('grant_date')->useCurrent();
 
             $table->primary(['supervisor_id', 'permission_id']);
         });

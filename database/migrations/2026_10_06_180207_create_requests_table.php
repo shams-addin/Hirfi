@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('description');
             $table->string('pic')->nullable();
             $table->string('request_address');
-            $table->date('request_date');
+            $table->timestamp('request_date')->useCurrent();
             $table->enum('request_state', RequestStatus::cases())->default(RequestStatus::PENDING);
             $table->foreignId('provider_id')->constrained(table: 'providers', column: 'provider_id');
             $table->foreignId('customer_id')->constrained(table: 'users', column: 'user_id');

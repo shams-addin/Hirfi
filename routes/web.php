@@ -15,7 +15,6 @@ Route::get('/', [HirfiController::class, 'index'])->name('home');
 // });
 
 Route::get('/sign-up', fn() => Inertia::render('SignUp'))
-    ->middleware('guest')
     ->name('sign-up');
 /**
      * `name()`: Named routes allow the convenient generation of URLs
@@ -26,7 +25,6 @@ Route::get('/sign-up', fn() => Inertia::render('SignUp'))
 Route::post('/sign-up', SignUp::class);
 
 Route::get('/login', fn() => Inertia::render('Login'))
-    ->middleware('guest')
     ->name('login');
 
 Route::post('/login', Login::class);

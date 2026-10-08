@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('customer_id')->constrained(table: 'users', column: 'user_id');
             $table->enum('star_number',[0, 1, 2, 3, 4, 5])->default(0);
             $table->text('comment')->nullable();
-            $table->date('rating_date');
+            $table->timestamp('rating_date')->useCurrent();
 
             $table->primary(['provider_id', 'customer_id']);
         });

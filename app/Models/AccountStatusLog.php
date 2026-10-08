@@ -1,0 +1,15 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Attributes\Table;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
+#[Table(key: 'log_id')]
+class AccountStatusLog extends Model
+{
+    public function users() : BelongsTo {
+        return $this->belongsTo(User::class);
+    }
+}

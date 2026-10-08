@@ -2,36 +2,29 @@
 
 namespace App\Models;
 
-use Database\Factories\UserFactory;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Provider extends Model
+#[Table(key: 'provider_id')]
+class Provider extends User
 {
-    /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable;
-
-    protected $table = 'providers';
-    protected $primaryKey = 'provider_id';
-    public $incrementing = false;
-    protected $keyType = 'int';
-
-    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
-    {
-        return $this->belongsTo(User::class, 'provider_id', 'user_id');
+    public function requests(): HasMany {
+        return $this->hasMany(Request::class, 'provider_id');
     }
 
-    public function category(): \Illuminate\Database\Eloquent\Relations\BelongsTo
-    {
-        return $this->belongsTo(Category::class, 'category_id', 'category_id');
+    public function users(): BelongsToMany {
+        return $this->belongsToMany(User::class, 'ratings', 'provider_id')
+            ->using(Rating::class);
     }
 
-    protected function casts(): array
-    {
-        return [
-            'provider_id' => 'integer',
-            'category_id' => 'integer',
-        ];
+    public function providerPhotos(): HasMany {
+        return $this->hasMany(ProviderPhoto::class, 'provider_id');
+    }
+
+    public function categories(): BelongsTo {
+        return $this->belongsTo(Category::class, 'provider_id');
     }
 }

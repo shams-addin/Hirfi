@@ -19,6 +19,7 @@ return new class extends Migration
             $table->date('birth_date');
             $table->string('pass_key');
             $table->string('phone', length:10)->unique();
+            $table->string('address');
             $table->string('nationality');
             $table->string('profile_picture')->nullable();
             $table->enum('account_state', AccountState::cases())->default(AccountState::ACTIVATED);
