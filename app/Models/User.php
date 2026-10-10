@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Database\Factories\UserFactory;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -10,7 +11,17 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-#[Table(key: 'user_id')]
+#[Table(key: 'user_id', timestamps: false)]
+#[Fillable([
+    'first_name',
+    'last_name',
+    'birth_date', 
+    'pass_key', 
+    'phone', 
+    'address', 
+    'nationality'
+    ])
+]
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
@@ -19,15 +30,20 @@ class User extends Authenticatable
     // protected $table = 'users';
     // protected $primaryKey = 'user_id';
     // protected $keyType = 'int';
-    
-    protected $fillable = [
-        'first_name',
-        'last_name',
-        'pass_key',
-        'phone',
-    ];
+
+    // protected $fillable = [
+    //     'first_name',
+    //     'last_name',
+    //     'pass_key',
+    //     'phone',
+    // ];
 
     protected $hidden = ['pass_key'];
+
+    public function getAuthPassword(): string
+    {
+        return $this->pass_key;
+    }
 
     public function requests(): HasMany {
         return $this->hasMany(Request::class, 'customer_id');
@@ -53,7 +69,6 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'age' => 'integer',
             'pass_key' => 'hashed',
         ];
     }

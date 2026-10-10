@@ -8,14 +8,29 @@ import StepThree from "./StepThree";
 import { useForm } from "@inertiajs/react";
 import { AnimatePresence } from "framer-motion";
 import { motion } from "framer-motion";
-import { AlertCircle } from "lucide-react";
+import { differenceInYears, isValid, parseISO } from "date-fns";
 
-export default function SignUpForm() {
+type Category = {
+    category_id: number;
+    category_name: string;
+}
+
+function isAtLeast18(birthDateValue: string): boolean {
+    if (!birthDateValue) {
+        return false;
+    }
+
+    const birthDate = parseISO(birthDateValue);
+
+    return isValid(birthDate) && differenceInYears(new Date(), birthDate) >= 18;
+}
+
+export default function SignUpForm({ categories }: { categories: Category[] }) {
     const [step, setStep] = useState(1);
     const { data, setData, post, processing, errors, clearErrors, reset } = useForm({
         firstName: "",
         lastName: "",
-        birth_date: "",
+        birthDate: "",
         password: "",
         password_confirmation: "",
         phone: "",
@@ -25,19 +40,21 @@ export default function SignUpForm() {
         nationality: "",
     });
 
-    function handleNext() {
+    function handleNext() { // FIXME
         if (step === 1) {
+            const birthDateIsValid = isAtLeast18(data.birthDate);
+
             if (
-                errors.firstName ||
-                errors.phone ||
-                errors.password ||
-                errors.birth_date ||
-                !data.password_confirmation.trim() ||
-                errors.address
+                !errors.firstName &&
+                !data.phone &&
+                !errors.password &&
+                !errors.birthDate &&
+                birthDateIsValid &&
+                data.password_confirmation.trim() &&
+                !errors.address
             ) {
                 return;
             }
-            clearErrors();
         }
 
         if (step === 2) {
@@ -49,13 +66,16 @@ export default function SignUpForm() {
                 return;
             }
 
-            clearErrors();
         }
 
-        if (step === 3 && errors.nationality) {
+        if (step === 3) {
+            if (errors.nationality) {
+                return;
+            }
             return;
         }
 
+        // clearErrors();
         setStep(step + 1);
     }
 
@@ -76,7 +96,7 @@ export default function SignUpForm() {
                 return <StepOne data={data} setData={setData} errors={errors} />;
 
             case 2:
-                return <StepTwo data={data} setData={setData} errors={errors} />;
+                return <StepTwo categories={categories} data={data} setData={setData} errors={errors} />;
 
             case 3:
                 return <StepThree data={data} setData={setData} errors={errors} />;
@@ -93,20 +113,6 @@ export default function SignUpForm() {
             <ProgressIndicator step={step} />
 
             <form onSubmit={handleSubmint}>
-                {/* <AnimatePresence mode="wait">
-                    {Object.keys(errors).length !== 0 && (
-                        <motion.div
-                            initial={{ opacity: 0, y: -10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -10 }}
-                            className="mb-6 p-4 bg-red-50 text-red-600 rounded-lg flex items-center gap-3 text-sm"
-                        >
-                            <AlertCircle size={18} /> */}
-                            {/* <span>{Object.keys(errors).length > 2 ? ("يرجى تعبئة جميع الحقول المطلوبة") : Object.values(errors)[0]}</span> */}
-                            {/* <span>{Object.keys(errors).join(" | ")}</span>
-                        </motion.div>
-                    )}
-                </AnimatePresence> */}
 
                 <AnimatePresence mode="wait">
                     <motion.div

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('phone', length:10)->unique();
             $table->string('address');
             $table->string('nationality');
-            $table->string('profile_picture')->nullable();
+            $table->string('profile_picture')->nullable()->default(null);
             $table->enum('account_state', AccountState::cases())->default(AccountState::ACTIVATED);
         });
 

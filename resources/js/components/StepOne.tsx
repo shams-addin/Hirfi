@@ -6,7 +6,7 @@ interface StepOneProps {
     data: {
         firstName: string;
         lastName: string;
-        birth_date: string;
+        birthDate: string;
         password: string;
         password_confirmation: string;
         phone: string;
@@ -64,10 +64,10 @@ export default function StepOne({ data, setData, errors }: StepOneProps) {
                     label="تاريخ الميلاد"
                     icon={Calendar}
                     inputType="date"
-                    inputName="birth_date"
-                    inputValue={data.birth_date}
-                    handleChange={(e) => setData("birth_date", e.target.value)}
-                    error={errors.birth_date}
+                    inputName="birthDate"
+                    inputValue={data.birthDate}
+                    handleChange={(e) => setData("birthDate", e.target.value)}
+                    error={errors.birthDate}
                 />
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

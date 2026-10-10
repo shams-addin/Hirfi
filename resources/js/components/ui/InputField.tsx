@@ -20,7 +20,7 @@ export default function InputField({label, icon:Icon, inputType, inputName, inpu
                 <Icon className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground/60" size={18} />
                 <input
                     type={inputType}
-                    inputMode={inputType == "tel" ? "numeric" : "none"}
+                    inputMode={inputType === "tel" ? "numeric" : "none"}
                     name={inputName}
                     value={inputValue}
                     onChange={handleChange}

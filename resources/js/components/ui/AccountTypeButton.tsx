@@ -1,32 +1,15 @@
-import { AnimatePresence } from "framer-motion";
-import { motion } from "framer-motion";
-import { LucideIcon, Wrench } from "lucide-react";
-import React, { useState } from "react";
-import SelectOptions from "./SelectOptions";
-
-// const JOB_TITLE = [
-//     {value: "plumber", name: "سباكة"},
-//     {value: "electrician", name: "كهرباء"},
-//     {value: "hvac", name: "فني تكييف"},
-//     {value: "cleaning", name: "تنظيف"},
-//     {value: "other", name: "أخرى"},
-// ]
+import { LucideIcon } from "lucide-react";
+import React from "react";
 
 interface AccountTypeProps {
     typeName: string;
-    accountType: string;
     typePlaceholder: string;
     isSelected: boolean;
     icon: LucideIcon;
     handleClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-export default function AccountTypeButton({icon:Icon, typeName, accountType, typePlaceholder, isSelected, handleClick}: AccountTypeProps) {
-    // const [serviceType, setServiceType] = useState("");
-    
-    // function handleSelectedService(value: string) {
-    //     setServiceType(value);
-    // }
+export default function AccountTypeButton({icon:Icon, typeName, typePlaceholder, isSelected, handleClick}: AccountTypeProps) {
 
     return (
         <>
@@ -44,19 +27,6 @@ export default function AccountTypeButton({icon:Icon, typeName, accountType, typ
                 <span className="text-xs opacity-70 mt-1">{typePlaceholder}</span>
             </button>
 
-            {/* <AnimatePresence>
-                    {accountType === "provider" && (
-                        <motion.div
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: 'auto' }}
-                            exit={{ opacity: 0, height: 0 }}
-                            className="pt-4 overflow-hidden"
-                        >
-                            <SelectOptions icon={Wrench} label="نوع الخدمة" value={serviceType} placeholder="اختر نوع الخدمة التي تقدمها..." optionValue={JOB_TITLE} handleChange={() => handleSelectedService("")} />
-
-                        </motion.div>
-                    )}
-                </AnimatePresence> */}
         </>
     );
 }

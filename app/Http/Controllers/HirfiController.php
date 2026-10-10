@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Provider;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -12,7 +14,13 @@ class HirfiController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Home');
+        return Inertia::render('Home', [
+            'categories' => Category::query()
+                ->orderBy('category_name')
+                ->get(['category_id', 'category_name'],),
+            'providers' => Provider::query()
+                ->get()
+        ]);
     }
 
     /**

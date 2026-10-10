@@ -2,13 +2,18 @@ import ConfirmButton from "@/components/ui/ConfirmButton";
 import InputField from "@/components/ui/InputField";
 import PasswordField from "@/components/ui/PasswordField";
 import { useForm } from "@inertiajs/react";
-import { Phone } from "lucide-react";
+import { AnimatePresence } from "framer-motion";
+import { AlertCircle, Phone } from "lucide-react";
+import { motion } from "framer-motion";
+import { usePage } from "@inertiajs/react";
 
 export default function Login() {
     const { data, setData, errors, reset, post, processing } = useForm({
         phone: "",
         password: ""
     })
+
+    const { flash } = usePage<{ flash?: { error?: string } }>().props;
 
     function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -26,7 +31,19 @@ export default function Login() {
                 </div>
 
                 <form className="space-y-6" onSubmit={handleSubmit}>
-
+                    <AnimatePresence mode="wait">
+                        {flash?.error && (
+                            <motion.div
+                                initial={{ opacity: 0, y: -10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -10 }}
+                                className="mb-6 p-4 bg-red-50 text-red-600 rounded-lg flex items-center gap-3 text-sm"
+                            >
+                                <AlertCircle size={18} />
+                                <span>{flash.error}</span>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
                     <InputField
                         label="رقم الهاتف"
                         icon={Phone}
@@ -35,7 +52,6 @@ export default function Login() {
                         inputValue={data.phone}
                         handleChange={(e) => setData("phone", e.target.value)}
                         inputPlaceholder="09X XXX XXXX"
-                        error={errors.phone}
                     />
 
                     <PasswordField
@@ -44,7 +60,6 @@ export default function Login() {
                         inputValue={data.password}
                         handleChange={(e) => setData("password", e.target.value)}
                         inputPlaceholder="••••••••"
-                        error={errors.password}
                     />
 
                     <ConfirmButton label="تسجيل الدخول" isProcessing={processing} />

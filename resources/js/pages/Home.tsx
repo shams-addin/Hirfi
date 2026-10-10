@@ -3,7 +3,12 @@ import Navbar from "@/components/Navbar";
 import TabButton from "@/components/ui/TabButton";
 import { useState } from "react";
 
-export default function Home() {
+type Category = {
+    category_id: number;
+    category_name: string;
+}
+
+export default function Home({ categories }: { categories: Category[] }) {
     const [activeTab, setActiveTab] = useState<'home' | 'dashboard'>('home');
 
     return (
@@ -14,7 +19,7 @@ export default function Home() {
             </Navbar>
 
             <main className="flex-1 container mx-auto px-4 py-8">
-                {activeTab === 'home' ? <HomeView /> : <DashboardView />}
+                {activeTab === 'home' ? <HomeView categories={categories} /> : <DashboardView />}
             </main>
         </div>
     );

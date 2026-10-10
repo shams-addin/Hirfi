@@ -20,10 +20,14 @@ export default function Navbar({ children }: NavbarProps) {
           
           <div className="flex items-center gap-4">
             <div className="w-px h-6 bg-border mx-2"></div>
-            <button className="flex items-center gap-2 text-sm font-medium text-destructive hover:bg-destructive/10 px-3 py-2 rounded-md transition-colors">
-              <LogOut />
-              <span className="hidden sm:inline">تسجيل الخروج</span>
-            </button>
+            
+            <form method="POST" action="/logout">
+              <button type="submit" className="flex items-center gap-2 text-sm font-medium text-destructive hover:bg-destructive/10 px-3 py-2 rounded-md transition-colors">
+                <LogOut />
+                <span className="hidden sm:inline">تسجيل الخروج</span>
+              </button>
+            </form>
+            
           </div>
           
         </div>

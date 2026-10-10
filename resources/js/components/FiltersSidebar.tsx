@@ -1,7 +1,12 @@
 import { Filter, Star } from "lucide-react";
 import { useState } from "react";
 
-export default function FiltersSidebar() {
+type Category = {
+    category_id: number;
+    category_name: string;
+}
+
+export default function FiltersSidebar({ categories }: { categories: Category[] }) {
   const [filterSpecialty, setFilterSpecialty] = useState('الكل');
   return (
         <aside className="w-full lg:w-64 shrink-0 space-y-6">
@@ -14,18 +19,23 @@ export default function FiltersSidebar() {
               <div>
                 <h4 className="font-semibold mb-2 text-sm text-muted-foreground">التخصص</h4>
                 <div className="space-y-2">
-                  {['الكل', 'كهربائي', 'سباك', 'فني تكييف (HVAC)'].map(spec => (
-                    <label key={spec} className="flex items-center gap-2 cursor-pointer">
-                      <input 
-                        type="radio" 
-                        name="specialty" 
-                        checked={filterSpecialty === (spec === 'الكل' ? '' : spec)}
-                        onChange={() => setFilterSpecialty(spec === 'الكل' ? '' : spec)}
-                        className="text-primary focus:ring-primary"
-                      />
-                      <span className="text-sm">{spec}</span>
-                    </label>
-                  ))}
+                  {[{ category_id: 0, category_name: 'الكل' }, ...categories].map((category) => {
+                    const label = category.category_name;
+                    const value = category.category_id === 0 ? '' : category.category_name;
+
+                    return (
+                      <label key={category.category_id} className="flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="radio"
+                          name="specialty"
+                          checked={filterSpecialty === value}
+                          onChange={() => setFilterSpecialty(value)}
+                          className="text-primary focus:ring-primary"
+                        />
+                        <span className="text-sm">{label}</span>
+                      </label>
+                    );
+                  })}
                 </div>
               </div>
 
@@ -37,7 +47,9 @@ export default function FiltersSidebar() {
                       <input type="radio" name="rating" className="text-primary focus:ring-primary" />
                       <span className="text-sm flex items-center gap-1">
                         {rating} نجوم فأكثر
-                        <Star />
+                        {Array.from({length: rating}).map((_,i) => (
+                          <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400"/>
+                        ))}
                       </span>
                     </label>
                   ))}

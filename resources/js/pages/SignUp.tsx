@@ -1,11 +1,16 @@
 import Branding from '@/components/Branding';
 import SignUpForm from '@/components/SignUpForm';
 
-export default function SignUp() {
+type Category = {
+    category_id: number;
+    category_name: string;
+}
+
+export default function SignUp({ categories }: { categories: Category[] }) {
     return (
         <div className="flex min-h-screen w-full flex-col font-sans md:flex-row bg-auth-background" dir="rtl">
             <div className="flex-1 flex flex-col p-6 md:p-12 overflow-y-auto">
-                <SignUpForm />
+                <SignUpForm categories={categories}/>
              
              <div className="mt-8 text-center text-sm text-muted-foreground pb-8">
             لديك حساب بالفعل؟{" "}
