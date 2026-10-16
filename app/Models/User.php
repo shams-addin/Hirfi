@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -15,12 +16,12 @@ use Illuminate\Notifications\Notifiable;
 #[Fillable([
     'first_name',
     'last_name',
-    'birth_date', 
-    'pass_key', 
-    'phone', 
-    'address', 
-    'nationality'
-    ])
+    'birth_date',
+    'pass_key',
+    'phone',
+    'address',
+    'nationality',
+])
 ]
 class User extends Authenticatable
 {
@@ -45,24 +46,34 @@ class User extends Authenticatable
         return $this->pass_key;
     }
 
-    public function requests(): HasMany {
+    public function providers(): HasOne
+    {
+        return $this->hasOne(Provider::class, 'provider_id', 'user_id');
+    }
+
+    public function requests(): HasMany
+    {
         return $this->hasMany(Request::class, 'customer_id');
     }
 
-    public function reporter(): HasMany {
+    public function reporter(): HasMany
+    {
         return $this->hasMany(Report::class, 'reporter_id');
     }
 
-    public function reported(): HasMany {
+    public function reported(): HasMany
+    {
         return $this->hasMany(Report::class, 'reported_id');
     }
 
-    public function providers(): BelongsToMany {
+    public function sendRatings(): BelongsToMany
+    {
         return $this->belongsToMany(Provider::class, 'ratings', 'customer_id')
             ->using(Rating::class);
     }
 
-    public function accountStates(): HasMany {
+    public function accountStates(): HasMany
+    {
         return $this->hasMany(AccountStatusLog::class, 'user_id');
     }
 

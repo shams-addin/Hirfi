@@ -27,46 +27,54 @@ export default function StepOne({ data, setData, errors }: StepOneProps) {
 
                     <InputField
                         label="الاسم"
+                        labelClassName="block text-sm font-medium text-foreground mb-1.5"
                         icon={User}
                         inputType="text"
                         inputName="firstName"
                         inputValue={data.firstName}
                         handleChange={(e) => setData("firstName", e.target.value)}
                         inputPlaceholder="محمد أحمد"
+                        className="w-full bg-auth-card border border-auth-border rounded-lg pl-4 pr-10 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-auth-accent/50 focus:border-auth-accent transition-all"
                         error={errors.firstName}
                     />
 
 
                     <InputField
                         label="الاسم الأخير (أختياري)"
+                        labelClassName="block text-sm font-medium text-foreground mb-1.5"
                         icon={User}
                         inputType="text"
                         inputName="lastName"
                         inputValue={data.lastName}
                         handleChange={(e) => setData("lastName", e.target.value)}
                         inputPlaceholder="الأوجلي"
+                        className="w-full bg-auth-card border border-auth-border rounded-lg pl-4 pr-10 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-auth-accent/50 focus:border-auth-accent transition-all"
                         error={errors.lastName}
                     />
 
                 </div>
                 <InputField
                     label="رقم الهاتف"
+                    labelClassName="block text-sm font-medium text-foreground mb-1.5"
                     icon={Phone}
                     inputType="tel"
                     inputName="phone"
                     inputValue={data.phone}
                     handleChange={(e) => setData("phone", e.target.value)}
                     inputPlaceholder="09X XXX XXXX"
+                    className="w-full bg-auth-card border border-auth-border rounded-lg pl-4 pr-10 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-auth-accent/50 focus:border-auth-accent transition-all"
                     error={errors.phone}
                 />
 
                 <InputField
                     label="تاريخ الميلاد"
+                    labelClassName="block text-sm font-medium text-foreground mb-1.5"
                     icon={Calendar}
                     inputType="date"
                     inputName="birthDate"
                     inputValue={data.birthDate}
                     handleChange={(e) => setData("birthDate", e.target.value)}
+                    className="w-full bg-auth-card border border-auth-border rounded-lg pl-4 pr-10 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-auth-accent/50 focus:border-auth-accent transition-all"
                     error={errors.birthDate}
                 />
 
@@ -95,12 +103,14 @@ export default function StepOne({ data, setData, errors }: StepOneProps) {
 
                 <InputField
                     label="العنوان"
+                    labelClassName="block text-sm font-medium text-foreground mb-1.5"
                     icon={MapPin}
                     inputType="text"
                     inputName="address"
                     inputValue={data.address}
                     handleChange={(e) => setData("address", e.target.value)}
                     inputPlaceholder="الماجوري، شارع 14"
+                    className="w-full bg-auth-card border border-auth-border rounded-lg pl-4 pr-10 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-auth-accent/50 focus:border-auth-accent transition-all"
                     error={errors.address}
                 />
             </div>

@@ -1,5 +1,6 @@
 import Branding from '@/components/Branding';
 import SignUpForm from '@/components/SignUpForm';
+import { Link } from '@inertiajs/react';
 
 type Category = {
     category_id: number;
@@ -14,9 +15,9 @@ export default function SignUp({ categories }: { categories: Category[] }) {
              
              <div className="mt-8 text-center text-sm text-muted-foreground pb-8">
             لديك حساب بالفعل؟{" "}
-            <a href="/login" className="text-auth-accent font-semibold hover:underline">
+            <Link href="/login" className="text-auth-accent font-semibold hover:underline">
               تسجيل الدخول
-            </a>
+            </Link>
           </div>
             </div>
             

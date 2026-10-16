@@ -2,12 +2,7 @@ import { useState } from "react";
 import SearchField from "./SearchField";
 import MainGrid from "./MainGrid";
 
-type Category = {
-    category_id: number;
-    category_name: string;
-}
-
-export default function HomeView({ categories }: { categories: Category[] }) {
+export default function HomeView() {
     const [searchTerm, setSearchTerm] = useState('');
     return (
         <div className="space-y-8 animate-in fade-in duration-500">
@@ -28,7 +23,7 @@ export default function HomeView({ categories }: { categories: Category[] }) {
 
             </section>
 
-            <MainGrid categories={categories}/>
+            <MainGrid searchResult={searchTerm} />
         </div>
     );
 }

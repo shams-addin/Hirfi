@@ -1,35 +1,46 @@
+import { usePage } from "@inertiajs/react";
 import { Filter, Star } from "lucide-react";
-import { useState } from "react";
+import { useMemo } from "react";
 
 type Category = {
     category_id: number;
     category_name: string;
 }
+interface FiltersSidebarProps {
+  filter: number;
+  setFilter: (value: number) => void;
+}
 
-export default function FiltersSidebar({ categories }: { categories: Category[] }) {
-  const [filterSpecialty, setFilterSpecialty] = useState('الكل');
+export default function FiltersSidebar({ filter, setFilter }: FiltersSidebarProps) {
+  const { categories } = usePage<{ categories: Category[]}>().props;
+
+  const options = useMemo(
+    () => [{ category_id: -1, category_name: 'الكل' }, ...categories],
+    [categories]
+  );
+
   return (
         <aside className="w-full lg:w-64 shrink-0 space-y-6">
           <div className="bg-card p-5 rounded-xl border border-border shadow-sm">
             <div className="flex items-center gap-2 font-display font-bold text-lg mb-4 border-b border-border pb-2">
               <Filter /> تصفية النتائج
             </div>
-            
+
             <div className="space-y-4">
               <div>
                 <h4 className="font-semibold mb-2 text-sm text-muted-foreground">التخصص</h4>
                 <div className="space-y-2">
-                  {[{ category_id: 0, category_name: 'الكل' }, ...categories].map((category) => {
+                  {options.map((category) => {
                     const label = category.category_name;
-                    const value = category.category_id === 0 ? '' : category.category_name;
+                    const value = category.category_id;
 
                     return (
                       <label key={category.category_id} className="flex items-center gap-2 cursor-pointer">
                         <input
                           type="radio"
                           name="specialty"
-                          checked={filterSpecialty === value}
-                          onChange={() => setFilterSpecialty(value)}
+                          checked={filter === value}
+                          onChange={() => setFilter(value)}
                           className="text-primary focus:ring-primary"
                         />
                         <span className="text-sm">{label}</span>

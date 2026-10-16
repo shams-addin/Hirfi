@@ -83,7 +83,7 @@ export default function SignUpForm({ categories }: { categories: Category[] }) {
         setStep(step - 1);
     }
 
-    function handleSubmint(e: React.SubmitEvent<HTMLFormElement>) {
+    function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
         e.preventDefault();
         post('/sign-up', {
             onSuccess: () => reset(),
@@ -112,7 +112,7 @@ export default function SignUpForm({ categories }: { categories: Category[] }) {
 
             <ProgressIndicator step={step} />
 
-            <form onSubmit={handleSubmint}>
+            <form onSubmit={handleSubmit}>
 
                 <AnimatePresence mode="wait">
                     <motion.div

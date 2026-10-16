@@ -1,7 +1,7 @@
 import ConfirmButton from "@/components/ui/ConfirmButton";
 import InputField from "@/components/ui/InputField";
 import PasswordField from "@/components/ui/PasswordField";
-import { useForm } from "@inertiajs/react";
+import { Link, useForm } from "@inertiajs/react";
 import { AnimatePresence } from "framer-motion";
 import { AlertCircle, Phone } from "lucide-react";
 import { motion } from "framer-motion";
@@ -46,11 +46,13 @@ export default function Login() {
                     </AnimatePresence>
                     <InputField
                         label="رقم الهاتف"
+                        labelClassName="block text-sm font-medium text-foreground mb-1.5"
                         icon={Phone}
                         inputType="tel"
                         inputName="phone"
                         inputValue={data.phone}
                         handleChange={(e) => setData("phone", e.target.value)}
+                        className="w-full bg-auth-card border border-auth-border rounded-lg pl-4 pr-10 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-auth-accent/50 focus:border-auth-accent transition-all"
                         inputPlaceholder="09X XXX XXXX"
                     />
 
@@ -67,7 +69,7 @@ export default function Login() {
 
                 <div className="mt-8 text-center text-sm text-gray-600">
                     ليس لديك حساب؟
-                    <a href="/sign-up" className="text-blue-600 hover:text-blue-800 font-bold">سجل الآن كعميل أو مزود خدمة</a>
+                    <Link href="/sign-up" className="text-blue-600 hover:text-blue-800 font-bold">سجل الآن كعميل أو مزود خدمة</Link>
                 </div>
             </div>
         </div>

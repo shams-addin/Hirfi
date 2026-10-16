@@ -2,29 +2,31 @@ import { LucideIcon } from "lucide-react";
 
 interface InputProps {
     label: string;
-    icon: LucideIcon;
+    labelClassName?: string;
+    icon?: LucideIcon;
     inputType: string;
-    inputName: string;
+    inputName?: string;
     inputValue: string;
     handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     inputPlaceholder?: string;
+    className?: string;
     error?: string|undefined;
 }
 
-export default function InputField({label, icon:Icon, inputType, inputName, inputValue, handleChange, inputPlaceholder, error}: InputProps) {
+export default function InputField({label, labelClassName, icon:Icon, inputType, inputName, inputValue, handleChange, inputPlaceholder, className, error}: InputProps) {
     
     return (
         <div>
-            <label className="block text-sm font-medium text-foreground mb-1.5">{label}</label>
+            <label className={labelClassName}>{label}</label>
             <div className="relative">
-                <Icon className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground/60" size={18} />
+                {Icon && <Icon className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground/60" size={18} />}
                 <input
                     type={inputType}
                     inputMode={inputType === "tel" ? "numeric" : "none"}
                     name={inputName}
                     value={inputValue}
                     onChange={handleChange}
-                    className="w-full bg-auth-card border border-auth-border rounded-lg pl-4 pr-10 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-auth-accent/50 focus:border-auth-accent transition-all"
+                    className={className}
                     placeholder={inputPlaceholder}
                 />
             </div>
