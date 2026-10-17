@@ -33,6 +33,7 @@ class HirfiController extends Controller
                 ]),
             'providers' => Provider::query()
                 ->with('users')
+                ->whereHas('users', fn ($query) => $query->where('account_state', 'activated'))
                 ->get()
                 ->map(fn ($provider) => [
                     'id' => $provider->provider_id,

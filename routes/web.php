@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\SignUp;
 use App\Http\Controllers\HirfiController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\RequestManagementController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ServiceRequestController;
 use App\Models\Category;
@@ -25,6 +26,11 @@ Route::get('/reviews', [ReviewController::class, 'index'])->middleware('auth');
 Route::post('/reviews', [ReviewController::class, 'store'])->name('ReviewController.store')->middleware('auth');
 
 Route::get('/profile', [ProfileController::class, 'index'])->middleware('auth');
+Route::get('/profile/{id}/edit', [ProfileController::class, 'edit'])->middleware('auth');
+Route::put('/profile/{id}/edit', [ProfileController::class, 'update'])->name('ProfileContrller.store')->middleware('auth');
+
+Route::get('/request-management', [RequestManagementController::class, 'index'])->middleware('auth');
+Route::put('/request-management/{id}', [RequestManagementController::class, 'update'])->middleware('auth');
 // Route::inertia()
 
 // Route::controller(HirfiController::class)->group(function () {

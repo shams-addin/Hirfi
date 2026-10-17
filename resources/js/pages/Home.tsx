@@ -28,8 +28,8 @@ export default function Home() {
     return (
         <div className="min-h-screen bg-background text-foreground font-sans flex flex-col">
             <Navbar>
-                <TabButton isActive={activeTab === 'home'} label="تصفح الخدمات" handleClick={() => setActiveTab('home')} />
-                <TabButton isActive={activeTab === 'dashboard'} label="إدارة الطلبات" handleClick={() => setActiveTab('dashboard')} />
+                <TabButton isActive={true} label="تصفح الخدمات" url="/"/>
+                <TabButton isActive={false} label="إدارة الطلبات" url="/"/>
             </Navbar>
                 <AnimatePresence mode="wait">
                     {showFlash && (
@@ -37,7 +37,7 @@ export default function Home() {
                             initial={{ opacity: 0, y: -10 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -10 }}
-                            className={`mb-6 p-4 ${message === flash?.success ? 'bg-success text-success' : 'bg-destructive text-destructive'} rounded-lg flex items-center gap-3 text-sm`}
+                            className={`mb-6 p-4 ${message === flash?.success ? 'bg-success text-success-foreground' : 'bg-destructive text-destructive-foreground'} rounded-lg flex items-center gap-3 text-sm`}
                         >
                             {message === flash?.success ? <CheckCircle2 size={18} /> : <AlertCircle size={18} />}
                             <span>{message}</span>
@@ -47,7 +47,7 @@ export default function Home() {
 
 
             <main className="flex-1 container mx-auto px-4 py-8">
-                {activeTab === 'home' ? <HomeView /> : <DashboardView />}
+                <HomeView />
             </main>
         </div>
     );
