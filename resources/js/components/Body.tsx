@@ -60,6 +60,7 @@ export default function Body({ requests, customers }: BodyProps) {
                                 {request.state === 'pending' && (
                                     <>
                                         <button
+                                            type="submit"
                                             disabled={processing}
                                             onClick={() => setData('state', 'accepted')}
                                             className="p-2 bg-success/10 text-success hover:bg-success hover:text-success-foreground rounded transition-colors"
@@ -68,6 +69,7 @@ export default function Body({ requests, customers }: BodyProps) {
                                             <CheckIcon />
                                         </button>
                                         <button
+                                            type="submit"
                                             disabled={processing}
                                             onClick={() => setData('state', 'rejected')}
                                             className="p-2 bg-destructive/10 text-destructive hover:bg-destructive hover:text-destructive-foreground rounded transition-colors"
@@ -79,6 +81,7 @@ export default function Body({ requests, customers }: BodyProps) {
                                 )}
                                 {request.state === 'accepted' && (
                                     <button
+                                        type="submit"
                                         disabled={processing}
                                         onClick={() => setData('state', 'completed')}
                                         className="px-3 py-1.5 bg-success text-success-foreground text-xs font-bold rounded hover:bg-success/90 transition-colors"
