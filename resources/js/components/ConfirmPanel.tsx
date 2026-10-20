@@ -2,8 +2,8 @@
 interface ConfirmTypeProps {
     title: string;
     messageOne: string;
-    messageTwo: string;
-    pendingType: string;
+    messageTwo?: string;
+    pendingType: boolean;
     processing: boolean;
     displayPanel: (flag: boolean) => void;
     cancel: () => void
@@ -15,7 +15,7 @@ export default function ConfirmPanel({ title, messageOne, messageTwo, pendingTyp
                 <div className="bg-card w-full max-w-sm rounded-2xl p-6 shadow-2xl">
                     <h3 className="text-xl font-bold mb-3">{title}</h3>
                     <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-                        {pendingType === 'provider'
+                        {pendingType
                             ? messageOne
                             : messageTwo}
                     </p>

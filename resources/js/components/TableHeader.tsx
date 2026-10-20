@@ -1,5 +1,5 @@
 
-export default function Header() {
+export default function TableHeader() {
     return (
         <tr>
             <th className="px-6 py-4 font-semibold">رقم الطلب</th>

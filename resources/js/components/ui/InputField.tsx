@@ -1,10 +1,10 @@
 import { LucideIcon } from "lucide-react";
 
 interface InputProps {
-    label: string;
+    label?: string;
     labelClassName?: string;
     icon?: LucideIcon;
-    inputType: string;
+    inputType?: string;
     inputName?: string;
     inputValue: string;
     handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;

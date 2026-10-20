@@ -28,17 +28,6 @@ class User extends Authenticatable
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
-    // protected $table = 'users';
-    // protected $primaryKey = 'user_id';
-    // protected $keyType = 'int';
-
-    // protected $fillable = [
-    //     'first_name',
-    //     'last_name',
-    //     'pass_key',
-    //     'phone',
-    // ];
-
     protected $hidden = ['pass_key'];
 
     public function getAuthPassword(): string

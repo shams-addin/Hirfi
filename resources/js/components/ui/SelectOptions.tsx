@@ -7,7 +7,7 @@ interface Option {
 }
 
 interface OptionProps {
-    icon: LucideIcon;
+    icon?: LucideIcon;
     label: string;
     value: string;
     placeholder?: string;
@@ -20,10 +20,10 @@ export default function SelectOptions({ icon:Icon, label, value, placeholder, op
         <>        
             <label className="block text-sm font-medium text-foreground mb-1.5">{label}</label>
             <div className="relative">
-                <Icon
+                {Icon &&<Icon
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground/60"
                     size={18}
-                />
+                />}
                 <select
                     value={value}
                     onChange={handleChange}

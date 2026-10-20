@@ -1,5 +1,4 @@
 import Body from "@/components/Body";
-import Header from "@/components/Header";
 import Navbar from "@/components/Navbar";
 import RequestTable from "@/components/RequestTable";
 import TabButton from "@/components/ui/TabButton";
@@ -8,6 +7,7 @@ import { AnimatePresence } from "framer-motion";
 import { motion } from "framer-motion";
 import { AlertCircle, CheckCircle2 } from "lucide-react";
 import { useEffect, useState } from "react";
+import TableHeader from "@/components/TableHeader";
 
 type Request = {
     id: number;
@@ -74,7 +74,7 @@ export default function RequestManagement() {
             <div className="bg-card border border-border rounded-xl shadow-sm overflow-hidden">
                 <div className="overflow-x-auto">
                     <RequestTable>
-                        <Header />
+                        <TableHeader />
                         <Body requests={requests} customers={users} />
                     </RequestTable>
                     

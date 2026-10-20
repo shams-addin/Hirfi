@@ -116,7 +116,7 @@ export default function EditProfile() {
                             title="تأكيد تغيير نوع الحساب"
                             messageOne="هل أنت متأكد من تحويل حسابك إلى «مقدم خدمة»؟ سيطلب منك ذلك إدخال تخصصك لتتمكن من استقبال الطلبات."
                             messageTwo="هل أنت متأكد من تحويل حسابك إلى «عميل»؟ ستفقد القدرة على استقبال الطلبات كفني."
-                            pendingType={data.accountType}
+                            pendingType={data.accountType === 'provider'}
                             displayPanel={setConfirmTypeChange}
                             processing={processing}
                             cancel={cancel}

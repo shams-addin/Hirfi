@@ -1,9 +1,10 @@
 import { useState } from "react";
 import Avatar from "./Avatar";
 import { usePage } from "@inertiajs/react";
-import RatingBadge from "./RatingBadge";
+import Badge from "./Badge";
 import ProviderDetails from "./ProviderDetails";
 import RequestPanel from "./RequestPanel";
+import { Star } from "lucide-react";
 
 type Category = {
     category_id: number;
@@ -83,7 +84,10 @@ export default function ProviderCard({ provider }: ProviderCardProps) {
           state={provider.state}
         />
           
-        <RatingBadge ratings={provider.starAvg} />  
+        <Badge color="blue">
+          <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+          {provider.starAvg}
+        </Badge>  
           
         </div>
         

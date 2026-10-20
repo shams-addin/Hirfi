@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Auth\Login;
 use App\Http\Controllers\Auth\Logout;
 use App\Http\Controllers\Auth\SignUp;
@@ -31,6 +32,16 @@ Route::put('/profile/{id}/edit', [ProfileController::class, 'update'])->name('Pr
 
 Route::get('/request-management', [RequestManagementController::class, 'index'])->middleware('auth');
 Route::put('/request-management/{id}', [RequestManagementController::class, 'update'])->middleware('auth');
+
+Route::get('/admin-dashboard', [AdminController::class, 'index']);
+Route::get('/admin-dashboard/search', [AdminController::class, 'search']);
+Route::put('/admin-dashboard/users/{id}/status', [AdminController::class, 'update']);
+Route::post('/admin-dashboard/category/store', [AdminController::class, 'store']);
+Route::put('/admin-dashboard/category/{id}/edit', [AdminController::class, 'updateCategory']);
+Route::delete('/admin-dashboard/category/${editId}/delete', [AdminController::class, 'destroy']);
+Route::get('/admin-dashboard/report', [AdminController::class, 'getReports']);
+Route::post('/admin-dashboard/supervisor/add', [AdminController::class, 'storeSupervisor']);
+Route::put('/admin-dashboard/supervisor/{id}/edit', [AdminController::class, 'storeSupervisor']);
 // Route::inertia()
 
 // Route::controller(HirfiController::class)->group(function () {

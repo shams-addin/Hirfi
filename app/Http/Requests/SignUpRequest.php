@@ -29,7 +29,7 @@ class SignUpRequest extends FormRequest
             'lastName' => ['nullable', 'string', 'max:255'],
             'birthDate' => ['required', 'date', 'before_or_equal:'.now()->subYears(18)->toDateString()],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'phone' => ['required', 'digits:10', 'unique:users,phone'],
+            'phone' => ['required', 'digits:10', 'unique:users,phone', 'starts_with:09'],
             'address' => ['required', 'string', 'max:255'],
             'nationality' => ['required', Rule::in([
                 'libyan', 'sudanese', 'egyptian', 'morocan', 'syrian',
