@@ -11,6 +11,7 @@ use App\Models\Category;
 use App\Models\Provider;
 use App\Models\Report;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -22,14 +23,46 @@ class AdminController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $validated = $request->validate([
+            'search' => ['nullable', 'string', 'max:255'],
+        ]);
+        $search = trim($validated['search'] ?? '');
+        $users = null;
+
+        if ($search !== '') {
+            $searchTerms = preg_split('/\s+/', $search, -1, PREG_SPLIT_NO_EMPTY) ?: [];
+
+            $users = User::query()
+                ->where(function (Builder $query) use ($search, $searchTerms): void {
+                    $query->where('phone', 'like', "%{$search}%")
+                        ->orWhere(function (Builder $nameQuery) use ($searchTerms): void {
+                            foreach ($searchTerms as $searchTerm) {
+                                $nameQuery->where(function (Builder $namePartQuery) use ($searchTerm): void {
+                                    $namePartQuery
+                                        ->where('first_name', 'like', "%{$searchTerm}%")
+                                        ->orWhere('last_name', 'like', "%{$searchTerm}%");
+                                });
+                            }
+                        });
+                })
+                ->get(['user_id', 'first_name', 'last_name', 'phone', 'account_state'])
+                ->map(fn (User $user): array => [
+                    'user_id' => $user->user_id,
+                    'user_name' => trim("{$user->first_name} {$user->last_name}"),
+                    'phone' => $user->phone,
+                    'account_state' => $user->account_state,
+                ]);
+        }
+
         $categories = Category::query()->get();
         $supervisors = Supervisor::query()->get();
         $permissions = Permission::query()->get();
         $supervisorPermissions = SupervisorPermission::query()->get();
         
         return Inertia::render('admin/AdminDashboard', [
+            'users' => $users,
             'categories' => $categories,
             'supervisors' => $supervisors,
             'permissions' => $permissions,
@@ -93,20 +126,9 @@ class AdminController extends Controller
         return redirect('/admin-dashboard')->with('success', 'تم تحديث بيانات المشرف');
     }
 
-    public function search(Request $search)
+    public function search(Request $request)
     {
-        $query = trim($search->input('search'));
-
-        $user = User::where('first_name', 'like', "%{$query}%")
-            ->orWhere('phone', 'like', "%{$query}%")
-            ->get();
-            
-        $provider = Provider::find($user->user_id);
-
-        return Inertia::render('admin/AdminDashboard',[
-            'users' => $user,
-            'provider' => $provider
-        ]);
+        return $this->index($request);
     }
 
     public function getReports(Request $request)
