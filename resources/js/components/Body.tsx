@@ -61,7 +61,7 @@ export default function Body({ requests, customers }: BodyProps) {
             {requests.map((request) => (
                 <form
                     onSubmit={(e) => {
-                        e.preventDefault;
+                        e.preventDefault();
                         put(`/request-management/${request.id}`);
                     }}
                 >
