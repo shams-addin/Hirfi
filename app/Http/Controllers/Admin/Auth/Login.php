@@ -25,10 +25,10 @@ class Login extends Controller
             'password.required' => 'حقل كلمة المرور مطلوب',
         ]);
 
-        if (Auth::attempt([
-            'phone' => $credentials['phone'],
-            'password' => $credentials['password'],
-        ])) {
+        // if (Auth::attempt([
+        //     'phone' => $credentials['phone'],
+        //     'password' => $credentials['password'],
+        // ])) {
             $supervisor = Supervisor::where('phone', $request->phone)->first();
 
             if ($supervisor && Hash::check($request->password, $supervisor->pass_key)) {
@@ -38,7 +38,7 @@ class Login extends Controller
                 return redirect()->intended('/admin-dashboard');
             }
             
-        }
+        // }
 
         return back()->with('error', 'بيانات الدخول غير صحيحة.');
     }
