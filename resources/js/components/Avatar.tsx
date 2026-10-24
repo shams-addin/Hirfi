@@ -20,7 +20,7 @@ export default function Avatar({ name, category, address, image, state }: Avatar
               <div>
                 <div className="flex items-center mt-1 gap-3">
                   <h4 className="font-bold text-lg font-display group-hover:text-primary transition-colors">{name}</h4>
-                  <span className={`flex items-center gap-1 ${state === 'busy'? 'bg-destructive text-destructive-foreground' :'bg-success text-success-foreground'} w-fit px-2 py-1 rounded text-sm font-semibold`}>{state}</span>
+                  <span className={`flex items-center gap-1 ${state === 'busy'? 'bg-destructive-foreground text-destructive' :'bg-success text-success-foreground'} w-fit px-2 py-1 rounded text-sm font-semibold`}>{state}</span>
                 </div>
 
                 <div className="flex items-center text-sm text-muted-foreground mt-1 gap-3">

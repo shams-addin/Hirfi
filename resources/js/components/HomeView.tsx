@@ -18,7 +18,7 @@ export default function HomeView() {
                         نربطك بأمهر السباكين، وفنيي الكهرباء، وخبراء التكييف المعتمدين والمقيّمين في منطقتك.
                     </p>
                     
-                    <SearchField searchValue={searchTerm} searchPlaceholder="عن ماذا تبحث؟ (مثال: صيانة تكييف)" handleChange={() => setSearchTerm(searchTerm)} />
+                    {/* <SearchField searchValue={searchTerm} searchPlaceholder="عن ماذا تبحث؟ (مثال: صيانة تكييف)" handleChange={() => setSearchTerm(searchTerm)} /> */}
                 </div>
 
             </section>

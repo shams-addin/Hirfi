@@ -41,7 +41,7 @@ export default function SupervisorsSection({ supervisors, supervisorPermissions 
         secondName: "",
         lastName: "",
         password: "",
-        passwordConfirmation: "",
+        password_confirmation: "",
         phone: "",
     });
 
@@ -57,7 +57,7 @@ export default function SupervisorsSection({ supervisors, supervisorPermissions 
         secondName: "",
         lastName: "",
         password: "",
-        passwordConfirmation: "",
+        password_confirmation: "",
         phone: "",
     });
 
@@ -65,19 +65,22 @@ export default function SupervisorsSection({ supervisors, supervisorPermissions 
         e.preventDefault();
         post("/admin-dashboard/supervisor/add", {
             onSuccess: () => resetAdd(),
-        })
+        });
+
+        setMode(null);
     }
 
     function handleEdit(e:React.SubmitEvent<HTMLFormElement>) {
         e.preventDefault();
-        put(`/admin-dashboard/supervisor/${editId}/edit`)
+        put(`/admin-dashboard/supervisor/${editId}/edit`);
+        setMode(null);
     }
     return (
         <>
             <Header
                 title="المشرفون"
                 desc="سجّل مشرفين جددًا وعدّل بياناتهم. تُنشأ الحسابات الجديدة بدون صلاحيات إدارية."
-                action={!mode && <button className='rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-teal-800 disabled:opacity-40' onClick={() => setMode('add')}>+ إضافة مشرف</button>}
+                action={!mode && <button className='rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-800 disabled:opacity-40' onClick={() => setMode('add')}>+ إضافة مشرف</button>}
             />
 
             {mode && (
@@ -133,7 +136,6 @@ export default function SupervisorsSection({ supervisors, supervisorPermissions 
                             className="w-full bg-auth-card border border-auth-border rounded-lg pl-4 pr-10 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-auth-accent/50 focus:border-auth-accent transition-all"
                             error={mode === 'add' ? errorsAdd.phone : errorsEdit.phone}
                         />
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
                             <PasswordField
                                 label={mode === 'add' ? 'كلمة المرور' : 'كلمة مرور جديدة (اختياري)'}
@@ -148,20 +150,19 @@ export default function SupervisorsSection({ supervisors, supervisorPermissions 
                             <PasswordField
                                 label="تأكيد كلمة المرور"
                                 inputName="password_confirmation"
-                                inputValue={mode === 'add' ? dataAdd.passwordConfirmation : dataEdit.passwordConfirmation}
-                                handleChange={(e) => mode === 'add' ? setAdd("passwordConfirmation", e.target.value) : setEdit("passwordConfirmation", e.target.value)}
+                                inputValue={mode === 'add' ? dataAdd.password_confirmation : dataEdit.password_confirmation}
+                                handleChange={(e) => mode === 'add' ? setAdd("password_confirmation", e.target.value) : setEdit("password_confirmation", e.target.value)}
                                 inputPlaceholder="••••••••"
-                                error={mode === 'add' ? errorsAdd.passwordConfirmation : errorsEdit.passwordConfirmation}
+                                error={mode === 'add' ? errorsAdd.password_confirmation : errorsEdit.password_confirmation}
                             />
 
-                        </div>
                     </div>
                     {mode === 'add' && <p className="mt-4 rounded-xl bg-amber-50 px-4 py-3 text-sm text-amber-800">سيُنشأ الحساب بدون أي صلاحيات إدارية حتى يمنحها مدير النظام من قسم الصلاحيات.</p>}
                     <div className="mt-5 flex gap-3">
-                        <button type="submit" disabled={mode === 'add' ? processingAdd : processingEidt} className='rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-teal-800 disabled:opacity-40'>
+                        <button type="submit" disabled={mode === 'add' ? processingAdd : processingEidt} className='rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-800 disabled:opacity-40'>
                             حفظ
                         </button>
-                        <button type="button" className="rounded-xl border border-stone-300 bg-white px-4 py-2 text-sm font-medium text-stone-700 transition hover:bg-stone-50" onClick={() => mode === 'add' ? cancelAdd() : cancelEdit()}>إلغاء</button>
+                        <button type="button" className="rounded-xl border border-stone-300 bg-white px-4 py-2 text-sm font-medium text-stone-700 transition hover:bg-stone-50" onClick={() => {mode === 'add' ? cancelAdd() : cancelEdit(); setMode(null)}}>إلغاء</button>
                     </div>
                     </form>
                 </Card>

@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\Auth\Login as AuthLogin;
+use App\Http\Controllers\Admin\Auth\Logout as AuthLogout;
 use App\Http\Controllers\Auth\Login;
 use App\Http\Controllers\Auth\Logout;
 use App\Http\Controllers\Auth\SignUp;
@@ -33,15 +35,16 @@ Route::put('/profile/{id}/edit', [ProfileController::class, 'update'])->name('Pr
 Route::get('/request-management', [RequestManagementController::class, 'index'])->middleware('auth');
 Route::put('/request-management/{id}', [RequestManagementController::class, 'update'])->middleware('auth');
 
-Route::get('/admin-dashboard', [AdminController::class, 'index']);
-Route::get('/admin-dashboard/search', [AdminController::class, 'search']);
-Route::put('/admin-dashboard/users/{id}/status', [AdminController::class, 'update']);
-Route::post('/admin-dashboard/category/store', [AdminController::class, 'store']);
-Route::put('/admin-dashboard/category/{id}/edit', [AdminController::class, 'updateCategory']);
-Route::delete('/admin-dashboard/category/${editId}/delete', [AdminController::class, 'destroy']);
-Route::get('/admin-dashboard/report', [AdminController::class, 'getReports']);
-Route::post('/admin-dashboard/supervisor/add', [AdminController::class, 'storeSupervisor']);
-Route::put('/admin-dashboard/supervisor/{id}/edit', [AdminController::class, 'storeSupervisor']);
+
+Route::get('/admin-dashboard', [AdminController::class, 'index'])->middleware('auth');
+Route::get('/admin-dashboard/search', [AdminController::class, 'search'])->middleware('auth');
+Route::put('/admin-dashboard/users/{id}/status', [AdminController::class, 'update'])->middleware('auth');
+Route::post('/admin-dashboard/category/store', [AdminController::class, 'store'])->middleware('auth');
+Route::put('/admin-dashboard/category/{id}/edit', [AdminController::class, 'updateCategory'])->middleware('auth');
+Route::delete('/admin-dashboard/category/{Id}/delete', [AdminController::class, 'destroy'])->middleware('auth');
+Route::get('/admin-dashboard/report', [AdminController::class, 'getReports'])->middleware('auth');
+Route::post('/admin-dashboard/supervisor/add', [AdminController::class, 'storeSupervisor'])->middleware('auth');
+Route::put('/admin-dashboard/supervisor/{id}/edit', [AdminController::class, 'updateSupervisor'])->middleware('auth');
 // Route::inertia()
 
 // Route::controller(HirfiController::class)->group(function () {
@@ -69,3 +72,11 @@ Route::get('/login', fn () => Inertia::render('Login'))
 Route::post('/login', Login::class);
 
 Route::post('/logout', Logout::class)->name('logout')->middleware('auth');
+
+// Admin
+Route::get('/admin-dashboard/login', fn () => Inertia::render('admin/Login'));
+
+Route::post('/admin-dashboard/login', AuthLogin::class);
+
+Route::post('/admin-dashboard/logout', AuthLogout::class)->middleware('auth');
+

@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 import { usePage } from "@inertiajs/react";
 
 export default function Login() {
-    const { data, setData, errors, reset, post, processing } = useForm({
+    const { data, setData, reset, post, processing } = useForm({
         phone: "",
         password: ""
     })
@@ -37,13 +37,16 @@ export default function Login() {
                                 initial={{ opacity: 0, y: -10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -10 }}
-                                className="mb-6 p-4 bg-red-50 text-red-600 rounded-lg flex items-center gap-3 text-sm"
+                                className="rounded-md border border-red-500 bg-red-50 m-auto p-4 shadow-sm"
                             >
-                                <AlertCircle size={18} />
-                                <span>{flash.error}</span>
+                                <div className="flex items-start gap-4">
+                                    <AlertCircle className="size-6 text-red-700" />
+                                    <p className="mt-0.5 text-red-700">{flash.error}</p>
+                                </div>
                             </motion.div>
                         )}
                     </AnimatePresence>
+
                     <InputField
                         label="رقم الهاتف"
                         labelClassName="block text-sm font-medium text-foreground mb-1.5"

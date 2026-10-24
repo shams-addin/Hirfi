@@ -48,23 +48,27 @@ export default function RequestManagement() {
     
     return (
         <div className="min-h-screen bg-background text-foreground font-sans flex flex-col">
-                    <Navbar>
+                    <Navbar action="/logout">
                         <TabButton isActive={true} label="تصفح الخدمات" url="/"/>
                         <TabButton isActive={false} label="إدارة الطلبات" url="/"/>
                     </Navbar>
-                        <AnimatePresence mode="wait">
-                            {showFlash && (
-                                <motion.div
-                                    initial={{ opacity: 0, y: -10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, y: -10 }}
-                                    className={`mb-6 p-4 ${message === flash?.success ? 'bg-success text-success-foreground' : 'bg-destructive text-destructive-foreground'} rounded-lg flex items-center gap-3 text-sm`}
-                                >
-                                    {message === flash?.success ? <CheckCircle2 size={18} /> : <AlertCircle size={18} />}
-                                    <span>{message}</span>
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
+                
+                       <AnimatePresence mode="wait">
+                    {showFlash && (
+                        <motion.div
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            className={`rounded-md border ${message === flash?.success ? 'border-green-500 bg-green-50' : 'border-red-500 bg-red-50'} m-auto p-4 shadow-sm`}
+                        >
+                            <div className="flex items-start gap-4">
+                            {message === flash?.success ? <CheckCircle2 className="size-6 text-green-700" /> : <AlertCircle className="size-6 text-red-700" />}
+                            <p className={`mt-0.5 ${message === flash?.success ? 'text-sm text-green-700' : 'text-red-700'} `}>{message}</p>
+                            </div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+
         <div className="max-w-4xl mx-auto animate-in fade-in duration-500">
             <div className="mb-8">
                 <h2 className="text-3xl font-bold font-display mb-2">لوحة إدارة الطلبات</h2>

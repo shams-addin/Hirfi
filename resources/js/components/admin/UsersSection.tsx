@@ -9,7 +9,8 @@ import ConfirmPanel from "../ConfirmPanel";
 
 type User = {
     user_id: number;
-    user_name: string;
+    first_name: string;
+    last_name: string;
     phone: string;
     account_state: string;
 }
@@ -19,7 +20,7 @@ type Provider = {
 }
 
 interface UsersSectionProps {
-  users: User[];
+  users: User[] | null;
   providers: Provider[];
 }
 
@@ -27,7 +28,17 @@ export default function UsersSection({ providers, users }: UsersSectionProps) {
     // const [userToConfirm, setUserToConfirm] = useState<User | null>(null);
     // const { users } = usePage<{users: User[]; provider: Provider}>().props;
     const {data, setData, processing, get} = useForm({ search:'' });
-    const stateForm = useForm({ status: '' });
+    const [editId, setEditId] = useState<number | null>(null);
+    const {
+            data: dataEdit,
+            setData: setEdit,
+            errors: errorsEdit,
+            put,
+            processing: processingEidt,
+            cancel: cancelEdit,
+         } = useForm({
+            status: "",
+        });
     
 
     function handleSearch(e:React.SubmitEvent<HTMLFormElement>) {
@@ -35,23 +46,16 @@ export default function UsersSection({ providers, users }: UsersSectionProps) {
         get(`/admin-dashboard/search`);
     }
 
-    function handleToggle(user: User) {
-        const nextStatus = user.account_state === 'activated' ? 'suspended' : 'activated';
-
-        stateForm.transform(() => ({ status: nextStatus }));
-        stateForm.put(`/admin-dashboard/users/${user.user_id}/status`, {
-            preserveScroll: true,
-        });
+    function handleToggle(e:React.SubmitEvent<HTMLFormElement>) {
+      e.preventDefault();  
+      put(`/admin-dashboard/users/${editId}/status`);
     }
 
     return (
         <>
             <Header title="إدارة المستخدمين" desc="ابحث عن مستخدم بالاسم أو رقم الجوال لعرض حالة حسابه وتعديلها." />
       <Card>
-        <form
-          className="flex flex-col gap-3 sm:flex-row"
-          onSubmit={handleSearch}
-        >
+        <form onSubmit={handleSearch} >
             <SearchField 
                 searchPlaceholder="الاسم أو رقم الجوال" 
                 searchValue={data.search} 
@@ -66,18 +70,19 @@ export default function UsersSection({ providers, users }: UsersSectionProps) {
       </Card>
 
       <div className="mt-6">
-        {users === null ? (
+        {users == null ? (
           <Empty title="ابدأ بالبحث" desc="أدخل اسم المستخدم أو رقم جواله لعرض بياناته." />
         ) : users.length === 0 ? (
           <Empty title="المستخدم غير موجود" desc={`لا يوجد مستخدم يطابق "${data.search}". تحقق من الاسم أو رقم الجوال.`} />
         ) : (
           <div className="grid gap-3">
             {users.map((u) => (
-              <Card key={u.user_id} className="flex flex-wrap items-center justify-between gap-4 !p-5">
+                <form onSubmit={handleToggle}>
+              <Card key={u.user_id} className="flex flex-wrap items-center justify-between gap-4 p-5!">
                 <div className="flex items-center gap-4">
-                  <div className="grid size-12 place-items-center rounded-full bg-teal-50 text-lg font-bold text-teal-800">{u.user_name[0]}</div>
+                  <div className="grid size-12 place-items-center rounded-full bg-blue-50 text-lg font-bold text-blue-800">{u.first_name[0]}</div>
                   <div>
-                    <p className="font-semibold text-stone-900">{u.user_name}</p>
+                    <p className="font-semibold text-stone-900">{u.first_name} {u.last_name}</p>
                     <p className="mt-0.5 text-sm text-stone-500" dir="ltr">
                       {u.phone}
                     </p>
@@ -85,12 +90,13 @@ export default function UsersSection({ providers, users }: UsersSectionProps) {
                 </div>
                 <div className="flex items-center gap-3">
                   {/* <Badge color="gray" text={u.role} /> */}
-                  {u.account_state === 'activated' ? <Badge color="green">'نشط'</Badge> : <Badge color="red">'موقوف'</Badge>}
-                    <button className={`rounded-xl px-4 py-2 text-sm font-semibold text-white transition ${u.account_state === 'activated' ? 'bg-destructive hover:bg-rose-700' : 'bg-primary hover:bg-teal-800'}`} onClick={() => handleToggle(u)}>
+                  {u.account_state === 'activated' ? <Badge color="green">نشط</Badge> : <Badge color="red">'موقوف'</Badge>}
+                    <button className={`rounded-xl px-4 py-2 text-sm font-semibold text-white transition ${u.account_state === 'activated' ? 'bg-destructive-foreground hover:bg-rose-700' : 'bg-primary hover:bg-blue-800'}`} onClick={(e) => {setEdit('status', u.account_state === 'activated' ? 'suspended' : 'activated'); setEditId(u.user_id)}}>
                       {u.account_state === 'activated' ? 'إيقاف الحساب' : 'تفعيل الحساب'}
                     </button>
                 </div>
               </Card>
+                </form>
             ))}
           </div>
         )}

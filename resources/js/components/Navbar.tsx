@@ -3,10 +3,11 @@ import { LogOut, User } from "lucide-react";
 import React from "react";
 
 interface NavbarProps {
-    children: React.ReactNode
+    children: React.ReactNode;
+    action: string;
 }
 
-export default function Navbar({ children }: NavbarProps) {
+export default function Navbar({ children, action }: NavbarProps) {
     return (
         <header className="sticky top-0 z-10 bg-card border-b border-border shadow-sm">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
@@ -29,8 +30,8 @@ export default function Navbar({ children }: NavbarProps) {
           <div className="flex items-center gap-4">
             <div className="w-px h-6 bg-border mx-2"></div>
             
-            <form method="POST" action="/logout">
-              <button type="submit" className="flex items-center gap-2 text-sm font-medium text-destructive hover:bg-destructive/10 px-3 py-2 rounded-md transition-colors">
+            <form method="POST" action={action}>
+              <button type="submit" className="flex items-center gap-2 text-sm font-medium text-destructive-foreground hover:bg-destructive-foreground/10 px-3 py-2 rounded-md transition-colors">
                 <LogOut />
                 <span className="hidden sm:inline">تسجيل الخروج</span>
               </button>

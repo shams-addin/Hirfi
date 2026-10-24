@@ -14,7 +14,7 @@ export default function ProviderTools({ providerState, handleClick }: ProviderTo
             <section className="bg-card border border-border rounded-xl shadow-sm p-6 md:p-8">
             <h3 className="text-xl font-bold font-display mb-1">حالة التوفر</h3>
             <p className="text-sm text-muted-foreground mb-4">
-                حالتك الحالية: <span className={`font-bold ${providerState === 'busy' ? 'text-destructive' : 'text-success'}`}>{providerState === 'busy' ? 'مشغول' : 'متفرغ'}</span> — تظهر للعملاء في نتائج البحث وفي صفحتك.
+                حالتك الحالية: <span className={`font-bold ${providerState === 'busy' ? 'text-destructive-foreground' : 'text-success'}`}>{providerState === 'busy' ? 'مشغول' : 'متفرغ'}</span> — تظهر للعملاء في نتائج البحث وفي صفحتك.
             </p>
                 <div className="grid grid-cols-2 gap-3 max-w-sm">
                     {['busy', 'free'].map(state => (
@@ -22,7 +22,7 @@ export default function ProviderTools({ providerState, handleClick }: ProviderTo
                             key={state}
                             onClick={handleClick}
                             className={`py-3 rounded-lg font-bold border-2 transition-colors ${state !== null
-                                ? (state === 'busy' ? 'border-destructive bg-destructive/10 text-destructive' : 'border-success bg-success/10 text-success')
+                                ? (state === 'busy' ? 'border-destructive bg-destructive/10 text-destructive-foreground' : 'border-success bg-success/10 text-success')
                                 : 'border-border hover:bg-muted'}`}
                         >
                             {state === 'busy' ? 'مشغول' : 'متفرغ'}

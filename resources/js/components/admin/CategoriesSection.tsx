@@ -52,7 +52,9 @@ export default function CategoriesSection({ categories }: CategoriesSectionProps
 
     function handleStore(e:React.SubmitEvent<HTMLFormElement>) {
         e.preventDefault();
-        postCategory('/admin-dashboard/category/store')
+        postCategory('/admin-dashboard/category/store', {
+          onSuccess: () => reset()
+        })
     }
 
     function handleEdit(e:React.SubmitEvent<HTMLFormElement>) {
@@ -65,6 +67,7 @@ export default function CategoriesSection({ categories }: CategoriesSectionProps
     function handleDelete(e:React.SubmitEvent<HTMLFormElement>) {
         e.preventDefault();
         sendDelete(`/admin-dashboard/category/${editId}/delete`);
+        setDisplayMessage(false);
     }
 
      return (
@@ -74,7 +77,7 @@ export default function CategoriesSection({ categories }: CategoriesSectionProps
         <form onSubmit={handleStore} className="flex flex-col gap-3 sm:flex-row sm:items-start">
           <div className="flex-1">
             <InputField 
-                className={`w-full rounded-xl border border-stone-300 bg-white px-4 py-2.5 text-sm outline-none ${categoryErrors && 'border-rose-400'} transition focus:border-teal-600 focus:ring-4 focus:ring-teal-600/10`}
+                className={`w-full rounded-xl border border-stone-300 bg-white px-4 py-2.5 text-sm outline-none ${categoryErrors && 'border-rose-400'} transition focus:border-blue-600 focus:ring-4 focus:ring-blue-600/10`}
                 inputPlaceholder="اسم الفئة الجديدة، مثال: النجارة"
                 inputValue={categoryData.categoryName}
                 handleChange={ e => setCategory({... categoryData, categoryName: e.target.value}) }
@@ -85,7 +88,7 @@ export default function CategoriesSection({ categories }: CategoriesSectionProps
           <button
             disabled={processingCategory}
             type="submit"
-            className="rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-teal-800 disabled:opacity-40">
+            className="rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-800 disabled:opacity-40">
                 حفظ
             </button>
         </form>
@@ -100,22 +103,24 @@ export default function CategoriesSection({ categories }: CategoriesSectionProps
                 <form onSubmit={handleEdit} className="flex flex-1 flex-col gap-2 sm:flex-row sm:items-start">
                   <div className="flex-1">
                     <InputField 
-                        className={`w-full rounded-xl border border-stone-300 bg-white px-4 py-2.5 text-sm outline-none ${errorEdit && 'border-rose-400'} transition focus:border-teal-600 focus:ring-4 focus:ring-teal-600/10`}
-                        inputValue={editCategory.categoryName}
+                        className={`w-full rounded-xl border border-stone-300 bg-white px-4 py-2.5 text-sm outline-none ${errorEdit && 'border-rose-400'} transition focus:border-blue-600 focus:ring-4 focus:ring-blue-600/10`}
+                        inputValue={c.category_name}
                         handleChange={ e => setEdit({... editCategory, categoryName: e.target.value}) }
                         error={errorEdit.categoryName}
                     />
                   </div>
                   <button
+                  type="submit"
                     disabled={processingEdit}
-                    className="rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-teal-800 disabled:opacity-40"
+                    className="rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-800 disabled:opacity-40"
                   >
                     حفظ
                   </button>
                   <button 
+                  type="button"
                     disabled={processingEdit}
                     className='rounded-xl border border-stone-300 bg-white px-4 py-2 text-sm font-medium text-stone-700 transition hover:bg-stone-50'
-                    onClick={() => cancelEdit()}>
+                    onClick={() => {setEditId(null); cancelEdit()}}>
                     إلغاء
                   </button>
 
@@ -134,7 +139,7 @@ export default function CategoriesSection({ categories }: CategoriesSectionProps
                         تعديل
                       </button>
                       <button 
-                        className="rounded-xl px-4 py-2 text-sm font-medium text-destructive transition hover:bg-destructive-foreground"
+                        className="rounded-xl px-4 py-2 text-sm font-medium text-destructive-foreground transition hover:bg-destructive-foreground hover:text-white"
                         onClick={() => {
                             setDisplayMessage(true);
                             setEditId(c.category_id);

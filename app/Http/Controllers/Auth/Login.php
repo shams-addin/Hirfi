@@ -42,7 +42,7 @@ class Login extends Controller
                 return redirect()->intended('/');
             }
 
-            return redirect()->intended('/');
+            // return redirect()->intended('/');
         }
 
         return back()->with('error', 'بيانات الدخول غير صحيحة.');

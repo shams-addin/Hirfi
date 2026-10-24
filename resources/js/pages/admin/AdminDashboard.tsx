@@ -8,13 +8,18 @@ import TabButton from "@/components/ui/TabButton";
 import { usePage } from "@inertiajs/react";
 import { Wrench } from "lucide-react";
 import { useState } from "react";
+import { AnimatePresence } from "framer-motion";
+import { useEffect } from "react";
+import { motion } from "framer-motion";
+import { AlertCircle, CheckCircle2 } from "lucide-react";
 
 type Section = 'users' | 'categories' | 'reports' | 'supervisors' | 'permissions';
 
 
 type User = {
     user_id: number;
-    user_name: string;
+    first_name: string;
+    last_name: string;
     phone: string;
     account_state: string;
 }
@@ -61,41 +66,82 @@ export default function AdminDashboard() {
     const [section, setSection] = useState<Section>('users');
     const { users, providers, categories, reports, supervisors, supervisorPermissions, permissions } = usePage
         <{
-            users: User[];
+            users: User[] | null;
             providers: Provider[];
             categories: Category[];
             reports: Report[];
             supervisors: Supervisor[];
             supervisorPermissions: SupervisorPermission[];
             permissions: Permission[];
-        }>().props
-        
+        }>().props;
+
+    const { flash } = usePage<{ flash?: { error?: string; success?: string } }>().props;
+    const message = flash?.error ?? flash?.success;
+    const [showFlash, setShowFlash] = useState(Boolean(message));
+
+    useEffect(() => {
+        if (!message) {
+            setShowFlash(false);
+            return;
+        }
+
+        setShowFlash(true);
+        const timeoutId = window.setTimeout(() => setShowFlash(false), 3000);
+
+        return () => window.clearTimeout(timeoutId);
+    }, [message]);
+
+    function renderPage(page: string) {
+        switch (page) {
+            case 'users':
+                return <UsersSection users={users} providers={providers} />;
+
+            case 'categories':
+                return <CategoriesSection categories={categories} />;
+
+            case 'reports':
+                return <ReportsSection reports={reports} users={users ?? []} />;
+
+            case 'supervisors':
+                return <SupervisorsSection supervisors={supervisors} supervisorPermissions={supervisorPermissions} />;
+
+            case 'permissions':
+                return <PermissionsSection supervisors={supervisors} supervisorPermissions={supervisorPermissions} permissions={permissions} />;
+
+            default:
+                return <UsersSection users={users} providers={providers} />
+        }
+    }
+
     return (
-        <div className="flex min-h-screen flex-col lg:flex-row">
-            <aside className="bg-teal-950 text-teal-50 lg:sticky lg:top-0 lg:h-screen lg:w-72 lg:shrink-0">
-                <div className="flex items-center gap-3 px-6 py-6">
-                    <Wrench className="grid size-10 place-items-center rounded-xl bg-primary text-lg font-bold text-teal-950" />
-                    <div>
-                        <p className="font-bold">منصة حرفي</p>
-                        <p className="text-xs text-teal-300">لوحة تحكم مدير النظام</p>
-                    </div>
-                </div>
-                <Navbar>
-                    <TabButton isActive={section === 'users'} handleClick={() => setSection('users')} label="إدارة المستخدمين" />
-                    <TabButton isActive={section === 'categories'} handleClick={() => setSection('categories')} label="فئات الخدمات" />
-                    <TabButton isActive={section === 'reports'} handleClick={() => setSection('reports')} label="البلاغات" />
-                    <TabButton isActive={section === 'supervisors'} handleClick={() => setSection('supervisors')} label="المشرفون" />
-                    <TabButton isActive={section === 'permissions'} handleClick={() => setSection('permissions')} label="إدارة الصلاحيات" />
-                </Navbar>
-                <div className="mx-6 mt-auto hidden border-t border-teal-900 pt-4 text-xs text-teal-400 lg:block">مسجل الدخول: مدير النظام</div>
-            </aside>
+        <div className="min-h-screen bg-background text-foreground font-sans flex flex-col">
+            <Navbar action="/admin-dashboard/logout">
+                <TabButton isActive={section === 'users'} handleClick={() => setSection('users')} label="إدارة المستخدمين" />
+                <TabButton isActive={section === 'categories'} handleClick={() => setSection('categories')} label="فئات الخدمات" />
+                <TabButton isActive={section === 'reports'} handleClick={() => setSection('reports')} label="البلاغات" />
+                <TabButton isActive={section === 'supervisors'} handleClick={() => setSection('supervisors')} label="المشرفون" />
+                <TabButton isActive={section === 'permissions'} handleClick={() => setSection('permissions')} label="إدارة الصلاحيات" />
+            </Navbar>
+
+            <AnimatePresence mode="wait">
+                {showFlash && (
+                    <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        className={`rounded-md border ${message === flash?.success ? 'border-green-500 bg-green-50' : 'border-red-500 bg-red-50'} m-auto p-4 shadow-sm`}
+                    >
+                        <div className="flex items-start gap-4">
+                            {message === flash?.success ? <CheckCircle2 className="size-6 text-green-700" /> : <AlertCircle className="size-6 text-red-700" />}
+                            <p className={`mt-0.5 ${message === flash?.success ? 'text-sm text-green-700' : 'text-red-700'} `}>{message}</p>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
             <main className="flex-1 p-5 sm:p-8 lg:p-10">
                 <div className="mx-auto max-w-5xl">
-                    <UsersSection users={users} providers={providers} />
-                    <CategoriesSection categories={categories} />
-                    <ReportsSection reports={reports} users={users} />
-                    <SupervisorsSection supervisors={supervisors} supervisorPermissions={supervisorPermissions} />
-                    <PermissionsSection supervisors={supervisors} supervisorPermissions={supervisorPermissions} permissions={permissions}/>
+                    {renderPage(section)}
                 </div>
             </main>
         </div>

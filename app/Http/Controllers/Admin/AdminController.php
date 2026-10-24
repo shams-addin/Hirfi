@@ -24,12 +24,14 @@ class AdminController extends Controller
      */
     public function index()
     {
+        $users = User::query()->get();
         $categories = Category::query()->get();
         $supervisors = Supervisor::query()->get();
         $permissions = Permission::query()->get();
         $supervisorPermissions = SupervisorPermission::query()->get();
         
         return Inertia::render('admin/AdminDashboard', [
+            'users' => $users,
             'categories' => $categories,
             'supervisors' => $supervisors,
             'permissions' => $permissions,
@@ -59,7 +61,7 @@ class AdminController extends Controller
 
         Category::create(['category_name' => $validated['categoryName']]);
 
-        return redirect('/admin-dashboard')->with('success', 'تم حفظ الفئة بنجاح');
+        return back()->with('success', 'تم حفظ الفئة بنجاح');
     }
     
     public function storeSupervisor(RegistrationRequest $request): RedirectResponse
@@ -74,23 +76,36 @@ class AdminController extends Controller
             'phone' => $validated['phone'],
         ]);
 
-        return redirect('/admin-dashboard')->with('success', 'تم إنشاء حساب المشرف بنجاح');
+        return back()->with('success', 'تم إنشاء حساب المشرف بنجاح');
     }
     
-    public function updateSupervisor(RegistrationRequest $request, int $id): RedirectResponse
+    public function updateSupervisor(Request $request, int $id): RedirectResponse
     {
-        $validated = $request->validated();
-
-        Supervisor::where('supervisor_id', $id)
-            ->update([
-                'first_name' => $validated['firstName'],
-                'second_name' => $validated['secondName'],
-                'last_name' => $validated['lastName'],
-                'pass_key' => Hash::make($validated['password']),
-                'phone' => $validated['phone'],
+        $validated = $request->validate([
+            'firstName' => ['sometimes', 'nullable', 'string', 'max:255'],
+            'secondName' => ['sometimes', 'nullable', 'string', 'max:255'],
+            'lastName' => ['sometimes', 'nullable', 'string', 'max:255'],
+            'password' => ['sometimes', 'nullable', 'string', 'min:8', 'confirmed'],
+            'phone' => ['sometimes', 'nullable', 'digits:10', 'starts_with:09', Rule::unique('supervisors', 'phone')->ignore($id, 'supervisor_id')],
+        ], [
+            'password.min' => 'يجب أن تتكون كلمة المرور من 8 أحرف على الأقل',
+            'password.confirmed' => 'كلمة المرور غير متطابقة',
+            'phone.digits' => 'رقم الهاتف يجب أن يتكون من 10 أرقام',
+            'phone.unique' => 'رقم الهاتف مسجل مسبقاً',
+            'phone.starts_with' => 'يجب أن يبدأ رقم الهاتف ب09',
         ]);
 
-        return redirect('/admin-dashboard')->with('success', 'تم تحديث بيانات المشرف');
+        Supervisor::where('supervisor_id', $id)
+            ->update(array_filter([
+                'first_name' => $validated['firstName'] ?? null,
+                'second_name' => $validated['secondName'] ?? null,
+                'last_name' => $validated['lastName'] ?? null,
+                'pass_key' => Hash::make($validated['password']) ?? null,
+                'phone' => $validated['phone'] ?? null,
+            ], static fn($value) => $value !== null && $value !== '')
+        );
+
+        return back()->with('success', 'تم تحديث بيانات المشرف');
     }
 
     public function search(Request $search)
@@ -178,8 +193,7 @@ class AdminController extends Controller
         Category::where('category_id', $id)
             ->update(['category_name' => $validated['categoryName']]);
 
-        return redirect('/admin-dashboard')
-            ->with('success', 'تم تعديل اسم الفئة');
+        return back()->with('success', 'تم تعديل اسم الفئة');
     }
 
     /**
@@ -194,7 +208,6 @@ class AdminController extends Controller
 
         Category::where('category_id', $id)->delete();
 
-        return redirect('/admin-dashboard')
-            ->with('success', 'تم حذف الفئة');
+        return back()->with('success', 'تم حذف الفئة');
     }
 }

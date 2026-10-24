@@ -51,7 +51,7 @@ export default function RequestPanel({ provider, displayRequest }: RequestPanelP
             <TextFeild 
               label="تفاصيل العمل (إلزامي)" 
               labelClassName="block text-sm font-semibold mb-1" 
-              className={`w-full p-3 bg-muted/50 border rounded-lg outline-none focus:bg-card focus:ring-2 focus:ring-primary/50 transition-all ${errors.description ? 'border-destructive' : 'border-border'}`} 
+              className={`w-full p-3 bg-muted/50 border rounded-lg outline-none focus:bg-card focus:ring-2 focus:ring-primary/50 transition-all ${errors.description ? 'border-destructive-foreground' : 'border-border'}`} 
               textPlaceholder="صف المشكلة أو الخدمة التي تحتاجها..."
               textValue={data.description}
               handleChange={e => setData({ ...data, description: e.target.value })}
@@ -63,7 +63,7 @@ export default function RequestPanel({ provider, displayRequest }: RequestPanelP
               label="موقع التنفيذ (إلزامي)"
               labelClassName="block text-sm font-semibold mb-1"
               inputType="text"
-              className={`w-full p-3 bg-muted/50 border rounded-lg outline-none focus:bg-card focus:ring-2 focus:ring-primary/50 transition-all ${errors.address ? 'border-destructive' : 'border-border'}`}
+              className={`w-full p-3 bg-muted/50 border rounded-lg outline-none focus:bg-card focus:ring-2 focus:ring-primary/50 transition-all ${errors.address ? 'border-destructive-foreground' : 'border-border'}`}
               inputPlaceholder="المدينة، الحي، الشارع..."
               inputValue={data.address}
               handleChange={e => setData({ ...data, address: e.target.value })}

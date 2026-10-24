@@ -121,7 +121,7 @@ class ProfileController extends Controller
             'password' => ['sometimes', 'nullable', 'string', 'min:8', 'confirmed'],
             'phone' => ['sometimes', 'nullable', 'digits:10', Rule::unique('users', 'phone')->ignore($user->getKey(), 'user_id')],
             'address' => ['sometimes', 'nullable', 'string', 'max:255'],
-            'nationality' => ['sometimes', 'nullable', Rule::in([
+            'nationality' => ['sometimes', 'nullable', 'starts_with:09', Rule::in([
                 'libyan', 'sudanese', 'egyptian', 'morocan', 'syrian',
             ])],
             'accountType' => ['sometimes', 'nullable', Rule::in(['customer', 'provider'])],
@@ -137,6 +137,7 @@ class ProfileController extends Controller
             'password.confirmed' => 'كلمة المرور غير متطابقة',
             'phone.digits' => 'رقم الهاتف يجب أن يتكون من 10 أرقام',
             'phone.unique' => 'رقم الهاتف مسجل مسبقاً',
+            'phone.starts_with' => 'يجب أن يبدأ رقم الهاتف ب09',
         ]);
 
         $user->update(array_filter([

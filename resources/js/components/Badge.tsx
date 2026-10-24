@@ -9,8 +9,8 @@ interface RatingBadgeProps {
 export default function Badge({ children, color }: RatingBadgeProps) {
     const colorMap = {
     blue: 'bg-accent/50 text-accent-foreground',
-    green: 'bg-success/50 text-success-foreground',
-    red: 'bg-destructive/50 text-destructive-foreground',
+    green: 'bg-success text-success-foreground',
+    red: 'bg-destructive text-destructive-foreground',
     amber: 'bg-amber/50 text-amber-foreground',
     gray: 'bg-muted/50 text-muted-foreground',
   }

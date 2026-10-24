@@ -72,7 +72,7 @@ export default function Body({ requests, customers }: BodyProps) {
                                             type="submit"
                                             disabled={processing}
                                             onClick={() => setData('state', 'rejected')}
-                                            className="p-2 bg-destructive/10 text-destructive hover:bg-destructive hover:text-destructive-foreground rounded transition-colors"
+                                            className="p-2 bg-destructive-foreground/10 text-destructive-foreground hover:bg-destructive hover:text-destructive-foreground rounded transition-colors"
                                             title="رفض الطلب"
                                         >
                                             <XIcon />

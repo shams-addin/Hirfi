@@ -41,7 +41,7 @@ export default function ReportPanel({ provider, displayReport }: ReportPanelProp
         <div className="fixed inset-0 z-[70] bg-black/60 flex items-center justify-center p-4 animate-in fade-in duration-200">
             <div className="bg-card w-full max-w-md rounded-2xl overflow-hidden shadow-2xl">
                 <div className="p-4 border-b border-border flex justify-between items-center bg-muted/30">
-                    <h3 className="font-bold font-display text-lg flex items-center gap-2 text-destructive"><MessageSquareWarning /> إبلاغ: <span className="text-foreground">{provider.name}</span></h3>
+                    <h3 className="font-bold font-display text-lg flex items-center gap-2 text-destructive-foreground"><MessageSquareWarning /> إبلاغ: <span className="text-foreground">{provider.name}</span></h3>
                     <button onClick={() => displayReport(false)} className="p-2 hover:bg-muted rounded-full transition-colors"><XIcon /></button>
                 </div>
 

@@ -83,7 +83,7 @@ export default function ProviderDetails({ signedUserId, provider, users, request
         <ReviewsSection reviews={reviews} users={users}/>
 
         <div className="p-4 border-t border-border bg-muted/30 flex justify-between items-center">
-          <button onClick={() => setDisplayReport(true)} className="flex items-center gap-2 text-sm text-destructive hover:bg-destructive/10 px-3 py-2 rounded-md transition-colors font-medium">
+          <button onClick={() => setDisplayReport(true)} className="flex items-center gap-2 text-sm text-destructive-foreground hover:bg-destructive-foreground/10 px-3 py-2 rounded-md transition-colors font-medium">
             <MessageSquareWarning /> الإبلاغ عن الفني
           </button>
 

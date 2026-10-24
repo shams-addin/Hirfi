@@ -13,7 +13,7 @@ export default function TabButton({ label, isActive, url, handleClick }: TabButt
             onClick={handleClick}
             className={`px-4 py-2 rounded-md font-semibold transition-colors ${isActive ? 'bg-auth-primary/10 text-auth-primary' : 'text-muted-foreground hover:text-foreground hover:bg-muted'}`}
         >
-           {url !== null && (<Link href={url}>{label}</Link>)}
+           {url != null ? (<Link href={url}>{label}</Link>) : label}
         </button>
     );
 }

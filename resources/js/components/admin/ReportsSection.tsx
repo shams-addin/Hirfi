@@ -21,7 +21,10 @@ type Report = {
 
 type User = {
     user_id: number;
-    user_name: string;
+    first_name: string;
+    last_name: string;
+    phone: string;
+    account_state: string;
 }
 
 interface ReportSectionProps {
@@ -47,11 +50,9 @@ export default function ReportsSection({ reports, users }: ReportSectionProps) {
     return (
         <>
             <Header title="معالجة البلاغات" desc="حدد معايير البلاغ ثم اضغط «إنشاء» لعرض البلاغات المطابقة." />
+                
             <Card>
-                <form
-                    className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:items-end"
-                    onSubmit={handleSubmit}
-                >
+                <form onSubmit={handleSubmit} className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:items-end">
                     <InputField
                         label="من تاريخ"
                         labelClassName="block text-sm font-medium text-foreground mb-1.5"
@@ -80,9 +81,10 @@ export default function ReportsSection({ reports, users }: ReportSectionProps) {
                         }))}
                         handleChange={(e) => setData("type", e.target.value)}
                     />
-                    <button type="submit" className='rounded-xl bg-teal-700 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-teal-800 disabled:opacity-40'>إنشاء</button>
-                </form>
+                    <button type="submit" className='rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-800 disabled:opacity-40'>إنشاء</button>
+                    </form>
             </Card>
+
 
             <div className="mt-6 grid gap-4">
                 {!reports ? (
@@ -107,13 +109,13 @@ export default function ReportsSection({ reports, users }: ReportSectionProps) {
                                     <div>
                                         <dt className="text-stone-400">مقدم البلاغ</dt>
                                         <dd className="mt-0.5 font-semibold">
-                                            {reporter?.user_name}
+                                            {reporter?.first_name} {reporter?.last_name}
                                         </dd>
                                     </div>
                                     <div>
                                         <dt className="text-stone-400">الطرف المُبلَّغ عنه</dt>
                                         <dd className="mt-0.5 font-semibold">
-                                            {reported?.user_name}
+                                            {reported?.first_name} {reported?.last_name}
                                         </dd>
                                     </div>
                                 </dl>

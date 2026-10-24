@@ -66,7 +66,7 @@ export default function ReviewPanel({ provider, displayReview }: ReviewPanelProp
                                 </button>
                             ))}
                         </div>
-                        {errors && <p className="text-destructive text-xs mt-2 flex items-center gap-1">{errors.rating}</p>}
+                        {errors && <p className="text-destructive-foreground text-xs mt-2 flex items-center gap-1">{errors.rating}</p>}
                     </div>
 
                     <div>

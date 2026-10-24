@@ -18,7 +18,7 @@ export default function TextFeild({ label, labelClassName, className, textValue,
                 value={textValue}
                 onChange={handleChange}
             />
-            {error && <p className="text-destructive text-xs mt-1">{error}</p>}
+            {error && <p className="text-destructive-foreground text-xs mt-1">{error}</p>}
         </div>
     );
 }
