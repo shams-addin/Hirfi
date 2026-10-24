@@ -1,9 +1,9 @@
-import { usePage } from "@inertiajs/react";
-import ProviderCard from "./ProviderCard";
+import { usePage } from '@inertiajs/react';
+import ProviderCard from './ProviderCard';
 
 type Provider = {
     id: number;
-    name: string
+    name: string;
     category: number;
     address: string;
     nationality?: string;
@@ -17,21 +17,29 @@ interface ProvidersListProps {
     searcheResult: string;
 }
 
-export default function ProvidersList({ searcheResult, filterResult }: ProvidersListProps) {
+export default function ProvidersList({
+    searcheResult,
+    filterResult,
+}: ProvidersListProps) {
     const { providers } = usePage<{ providers: Provider[] }>().props;
-    const cards = providers.filter(p => filterResult === -1 || p.category === filterResult);
+    const cards = providers.filter(
+        (p) => filterResult === -1 || p.category === filterResult,
+    );
     return (
         <div className="flex-1">
-            <div className="flex justify-between items-center mb-6">
-                <h3 className="text-xl font-bold font-display">مقدمو الخدمات المتاحين</h3>
-                <span className="text-sm text-muted-foreground">{cards.length} نتيجة</span>
+            <div className="mb-6 flex items-center justify-between">
+                <h3 className="font-display text-xl font-bold">
+                    مقدمو الخدمات المتاحين
+                </h3>
+                <span className="text-muted-foreground text-sm">
+                    {cards.length} نتيجة
+                </span>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {cards
-                    .map(provider => (
-                        <ProviderCard key={provider.id} provider={provider} />
-                    ))}
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                {cards.map((provider) => (
+                    <ProviderCard key={provider.id} provider={provider} />
+                ))}
             </div>
         </div>
     );

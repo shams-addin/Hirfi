@@ -1,22 +1,29 @@
-import { MapPin, Search } from "lucide-react";
-import React from "react";
-import SelectOptions from "./ui/SelectOptions";
+import { MapPin, Search } from 'lucide-react';
+import React from 'react';
+import SelectOptions from './ui/SelectOptions';
 
 interface SearchFieldProps {
     searchValue: string;
-    processing: boolean
+    processing: boolean;
     searchPlaceholder: string;
     handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
-export default function SearchField({ searchValue, processing, searchPlaceholder, handleChange }: SearchFieldProps) {
+export default function SearchField({
+    searchValue,
+    processing,
+    searchPlaceholder,
+    handleChange,
+}: SearchFieldProps) {
     return (
-        <div className="bg-card p-2 rounded-xl flex flex-col md:flex-row gap-2 shadow-xl">
-            <div className="flex-1 relative">
-                <span className="absolute right-3 top-3 text-muted-foreground"><Search /></span>
+        <div className="bg-card flex flex-col gap-2 rounded-xl p-2 shadow-xl md:flex-row">
+            <div className="relative flex-1">
+                <span className="text-muted-foreground absolute top-3 right-3">
+                    <Search />
+                </span>
                 <input
                     type="text"
                     placeholder={searchPlaceholder}
-                    className="w-full pr-10 pl-4 py-3 bg-transparent text-foreground outline-none"
+                    className="text-foreground w-full bg-transparent py-3 pr-10 pl-4 outline-none"
                     value={searchValue}
                     onChange={handleChange}
                 />
@@ -32,7 +39,11 @@ export default function SearchField({ searchValue, processing, searchPlaceholder
                 </select>
             </div> */}
             {/* <SelectOptions icon={MapPin}  /> */}
-            <button type="submit" disabled={processing} className="bg-primary text-primary-foreground px-8 py-3 rounded-lg font-bold hover:bg-primary/90 transition-colors">
+            <button
+                type="submit"
+                disabled={processing}
+                className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg px-8 py-3 font-bold transition-colors"
+            >
                 بحث
             </button>
         </div>

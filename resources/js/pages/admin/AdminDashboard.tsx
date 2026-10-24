@@ -1,20 +1,24 @@
-import CategoriesSection from "@/components/admin/CategoriesSection";
-import PermissionsSection from "@/components/admin/PermissionsSection";
-import ReportsSection from "@/components/admin/ReportsSection";
-import SupervisorsSection from "@/components/admin/SupervisorsSection";
-import UsersSection from "@/components/admin/UsersSection";
-import Navbar from "@/components/Navbar";
-import TabButton from "@/components/ui/TabButton";
-import { usePage } from "@inertiajs/react";
-import { Wrench } from "lucide-react";
-import { useState } from "react";
-import { AnimatePresence } from "framer-motion";
-import { useEffect } from "react";
-import { motion } from "framer-motion";
-import { AlertCircle, CheckCircle2 } from "lucide-react";
+import CategoriesSection from '@/components/admin/CategoriesSection';
+import PermissionsSection from '@/components/admin/PermissionsSection';
+import ReportsSection from '@/components/admin/ReportsSection';
+import SupervisorsSection from '@/components/admin/SupervisorsSection';
+import UsersSection from '@/components/admin/UsersSection';
+import Navbar from '@/components/Navbar';
+import TabButton from '@/components/ui/TabButton';
+import { usePage } from '@inertiajs/react';
+import { Wrench } from 'lucide-react';
+import { useState } from 'react';
+import { AnimatePresence } from 'framer-motion';
+import { useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { AlertCircle, CheckCircle2 } from 'lucide-react';
 
-type Section = 'users' | 'categories' | 'reports' | 'supervisors' | 'permissions';
-
+type Section =
+    | 'users'
+    | 'categories'
+    | 'reports'
+    | 'supervisors'
+    | 'permissions';
 
 type User = {
     user_id: number;
@@ -22,16 +26,16 @@ type User = {
     last_name: string;
     phone: string;
     account_state: string;
-}
+};
 
 type Provider = {
     provider_id: number;
-}
+};
 
 type Category = {
     category_id: number;
     category_name: string;
-}
+};
 
 type Report = {
     report_id: number;
@@ -41,7 +45,7 @@ type Report = {
     reporter_id: number;
     reported_id: number;
     state: string;
-}
+};
 
 type Supervisor = {
     supervisor_id: number;
@@ -50,32 +54,41 @@ type Supervisor = {
     last_name: string;
     pass_key: string;
     phone: string;
-}
+};
 
 type SupervisorPermission = {
     supervisor_id: number;
     permission_id: number;
-}
+};
 
 type Permission = {
     permission_id: number;
     permission_type: string;
-}
+};
 
 export default function AdminDashboard() {
     const [section, setSection] = useState<Section>('users');
-    const { users, providers, categories, reports, supervisors, supervisorPermissions, permissions } = usePage
-        <{
-            users: User[] | null;
-            providers: Provider[];
-            categories: Category[];
-            reports: Report[];
-            supervisors: Supervisor[];
-            supervisorPermissions: SupervisorPermission[];
-            permissions: Permission[];
-        }>().props;
+    const {
+        users,
+        providers,
+        categories,
+        reports,
+        supervisors,
+        supervisorPermissions,
+        permissions,
+    } = usePage<{
+        users: User[] | null;
+        providers: Provider[];
+        categories: Category[];
+        reports: Report[];
+        supervisors: Supervisor[];
+        supervisorPermissions: SupervisorPermission[];
+        permissions: Permission[];
+    }>().props;
 
-    const { flash } = usePage<{ flash?: { error?: string; success?: string } }>().props;
+    const { flash } = usePage<{
+        flash?: { error?: string; success?: string };
+    }>().props;
     const message = flash?.error ?? flash?.success;
     const [showFlash, setShowFlash] = useState(Boolean(message));
 
@@ -103,24 +116,55 @@ export default function AdminDashboard() {
                 return <ReportsSection reports={reports} users={users ?? []} />;
 
             case 'supervisors':
-                return <SupervisorsSection supervisors={supervisors} supervisorPermissions={supervisorPermissions} />;
+                return (
+                    <SupervisorsSection
+                        supervisors={supervisors}
+                        supervisorPermissions={supervisorPermissions}
+                    />
+                );
 
             case 'permissions':
-                return <PermissionsSection supervisors={supervisors} supervisorPermissions={supervisorPermissions} permissions={permissions} />;
+                return (
+                    <PermissionsSection
+                        supervisors={supervisors}
+                        supervisorPermissions={supervisorPermissions}
+                        permissions={permissions}
+                    />
+                );
 
             default:
-                return <UsersSection users={users} providers={providers} />
+                return <UsersSection users={users} providers={providers} />;
         }
     }
 
     return (
-        <div className="min-h-screen bg-background text-foreground font-sans flex flex-col">
+        <div className="bg-background text-foreground flex min-h-screen flex-col font-sans">
             <Navbar action="/admin-dashboard/logout">
-                <TabButton isActive={section === 'users'} handleClick={() => setSection('users')} label="إدارة المستخدمين" />
-                <TabButton isActive={section === 'categories'} handleClick={() => setSection('categories')} label="فئات الخدمات" />
-                <TabButton isActive={section === 'reports'} handleClick={() => setSection('reports')} label="البلاغات" />
-                <TabButton isActive={section === 'supervisors'} handleClick={() => setSection('supervisors')} label="المشرفون" />
-                <TabButton isActive={section === 'permissions'} handleClick={() => setSection('permissions')} label="إدارة الصلاحيات" />
+                <TabButton
+                    isActive={section === 'users'}
+                    handleClick={() => setSection('users')}
+                    label="إدارة المستخدمين"
+                />
+                <TabButton
+                    isActive={section === 'categories'}
+                    handleClick={() => setSection('categories')}
+                    label="فئات الخدمات"
+                />
+                <TabButton
+                    isActive={section === 'reports'}
+                    handleClick={() => setSection('reports')}
+                    label="البلاغات"
+                />
+                <TabButton
+                    isActive={section === 'supervisors'}
+                    handleClick={() => setSection('supervisors')}
+                    label="المشرفون"
+                />
+                <TabButton
+                    isActive={section === 'permissions'}
+                    handleClick={() => setSection('permissions')}
+                    label="إدارة الصلاحيات"
+                />
             </Navbar>
 
             <AnimatePresence mode="wait">
@@ -132,17 +176,23 @@ export default function AdminDashboard() {
                         className={`rounded-md border ${message === flash?.success ? 'border-green-500 bg-green-50' : 'border-red-500 bg-red-50'} m-auto p-4 shadow-sm`}
                     >
                         <div className="flex items-start gap-4">
-                            {message === flash?.success ? <CheckCircle2 className="size-6 text-green-700" /> : <AlertCircle className="size-6 text-red-700" />}
-                            <p className={`mt-0.5 ${message === flash?.success ? 'text-sm text-green-700' : 'text-red-700'} `}>{message}</p>
+                            {message === flash?.success ? (
+                                <CheckCircle2 className="size-6 text-green-700" />
+                            ) : (
+                                <AlertCircle className="size-6 text-red-700" />
+                            )}
+                            <p
+                                className={`mt-0.5 ${message === flash?.success ? 'text-sm text-green-700' : 'text-red-700'} `}
+                            >
+                                {message}
+                            </p>
                         </div>
                     </motion.div>
                 )}
             </AnimatePresence>
 
             <main className="flex-1 p-5 sm:p-8 lg:p-10">
-                <div className="mx-auto max-w-5xl">
-                    {renderPage(section)}
-                </div>
+                <div className="mx-auto max-w-5xl">{renderPage(section)}</div>
             </main>
         </div>
     );

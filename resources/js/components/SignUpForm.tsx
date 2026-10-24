@@ -1,19 +1,19 @@
-import React, { useState } from "react";
-import ProgressIndicator from "./ui/ProgressIndicator";
-import StepOne from "./StepOne";
-import NextButton from "./ui/NextButton";
-import BackButton from "./ui/BackButton";
-import StepTwo from "./StepTwo";
-import StepThree from "./StepThree";
-import { useForm } from "@inertiajs/react";
-import { AnimatePresence } from "framer-motion";
-import { motion } from "framer-motion";
-import { differenceInYears, isValid, parseISO } from "date-fns";
+import React, { useState } from 'react';
+import ProgressIndicator from './ui/ProgressIndicator';
+import StepOne from './StepOne';
+import NextButton from './ui/NextButton';
+import BackButton from './ui/BackButton';
+import StepTwo from './StepTwo';
+import StepThree from './StepThree';
+import { useForm } from '@inertiajs/react';
+import { AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
+import { differenceInYears, isValid, parseISO } from 'date-fns';
 
 type Category = {
     category_id: number;
     category_name: string;
-}
+};
 
 function isAtLeast18(birthDateValue: string): boolean {
     if (!birthDateValue) {
@@ -27,20 +27,22 @@ function isAtLeast18(birthDateValue: string): boolean {
 
 export default function SignUpForm({ categories }: { categories: Category[] }) {
     const [step, setStep] = useState(1);
-    const { data, setData, post, processing, errors, clearErrors, reset } = useForm({
-        firstName: "",
-        lastName: "",
-        birthDate: "",
-        password: "",
-        password_confirmation: "",
-        phone: "",
-        address: "",
-        accountType: "",
-        serviceType: "",
-        nationality: "",
-    });
+    const { data, setData, post, processing, errors, clearErrors, reset } =
+        useForm({
+            firstName: '',
+            lastName: '',
+            birthDate: '',
+            password: '',
+            password_confirmation: '',
+            phone: '',
+            address: '',
+            accountType: '',
+            serviceType: '',
+            nationality: '',
+        });
 
-    function handleNext() { // FIXME
+    function handleNext() {
+        // FIXME
         if (step === 1) {
             const birthDateIsValid = isAtLeast18(data.birthDate);
 
@@ -62,10 +64,9 @@ export default function SignUpForm({ categories }: { categories: Category[] }) {
                 return;
             }
 
-            if (data.accountType === "provider" && errors.serviceType) {
+            if (data.accountType === 'provider' && errors.serviceType) {
                 return;
             }
-
         }
 
         if (step === 3) {
@@ -93,27 +94,41 @@ export default function SignUpForm({ categories }: { categories: Category[] }) {
     function stepPage(stepNumber: number) {
         switch (stepNumber) {
             case 1:
-                return <StepOne data={data} setData={setData} errors={errors} />;
+                return (
+                    <StepOne data={data} setData={setData} errors={errors} />
+                );
 
             case 2:
-                return <StepTwo categories={categories} data={data} setData={setData} errors={errors} />;
+                return (
+                    <StepTwo
+                        categories={categories}
+                        data={data}
+                        setData={setData}
+                        errors={errors}
+                    />
+                );
 
             case 3:
-                return <StepThree data={data} setData={setData} errors={errors} />;
+                return (
+                    <StepThree data={data} setData={setData} errors={errors} />
+                );
         }
     }
 
     return (
-        <div className="max-w-md w-full mx-auto flex-1 flex flex-col">
+        <div className="mx-auto flex w-full max-w-md flex-1 flex-col">
             <div className="mb-8">
-                <h1 className="text-3xl font-bold text-foreground mb-2">إنشاء حساب جديد</h1>
-                <p className="text-muted-foreground">انضم إلينا الآن للوصول إلى أفضل الخدمات.</p>
+                <h1 className="text-foreground mb-2 text-3xl font-bold">
+                    إنشاء حساب جديد
+                </h1>
+                <p className="text-muted-foreground">
+                    انضم إلينا الآن للوصول إلى أفضل الخدمات.
+                </p>
             </div>
 
             <ProgressIndicator step={step} />
 
             <form onSubmit={handleSubmit}>
-
                 <AnimatePresence mode="wait">
                     <motion.div
                         key={step}
@@ -123,14 +138,23 @@ export default function SignUpForm({ categories }: { categories: Category[] }) {
                         transition={{ duration: 0.2 }}
                         className="space-y-6"
                     >
+                        {stepPage(step)}
 
-                    {stepPage(step)}
-
-                    <div className="mt-12 flex gap-4 pt-6 border-t border-auth-border">
-                        <NextButton stepNumber={step} onClick={handleNext} buttonType={step !== 3 ? undefined : "submit"} isProcessing={processing} />
-                        {step > 1 &&
-                            <BackButton stepNumber={step} onClick={handleBack} isProcessing={processing} />}
-                    </div>
+                        <div className="border-auth-border mt-12 flex gap-4 border-t pt-6">
+                            <NextButton
+                                stepNumber={step}
+                                onClick={handleNext}
+                                buttonType={step !== 3 ? undefined : 'submit'}
+                                isProcessing={processing}
+                            />
+                            {step > 1 && (
+                                <BackButton
+                                    stepNumber={step}
+                                    onClick={handleBack}
+                                    isProcessing={processing}
+                                />
+                            )}
+                        </div>
                     </motion.div>
                 </AnimatePresence>
             </form>

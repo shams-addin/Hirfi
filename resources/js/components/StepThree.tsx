@@ -1,14 +1,14 @@
-import { Globe } from "lucide-react";
-import SelectOptions from "./ui/SelectOptions";
+import { Globe } from 'lucide-react';
+import SelectOptions from './ui/SelectOptions';
 
 const ARAB_COUNTRIES = [
-    { value: "libyan", name: "ليبي" },
-    { value: "saudi", name: "سعودي" },
-    { value: "egyptian", name: "مصري" },
-    { value: "jordanian", name: "أردني" },
-    { value: "syrian", name: "سوري" },
-    { value: "lebanese", name: "لبناني" },
-]
+    { value: 'libyan', name: 'ليبي' },
+    { value: 'saudi', name: 'سعودي' },
+    { value: 'egyptian', name: 'مصري' },
+    { value: 'jordanian', name: 'أردني' },
+    { value: 'syrian', name: 'سوري' },
+    { value: 'lebanese', name: 'لبناني' },
+];
 
 interface StepThreeProps {
     data: {
@@ -21,7 +21,7 @@ interface StepThreeProps {
 export default function StepThree({ data, setData, errors }: StepThreeProps) {
     return (
         <div className="space-y-6">
-            <h2 className="text-xl font-semibold mb-4">الجنسية</h2>
+            <h2 className="mb-4 text-xl font-semibold">الجنسية</h2>
             <div>
                 <SelectOptions
                     icon={Globe}
@@ -29,10 +29,14 @@ export default function StepThree({ data, setData, errors }: StepThreeProps) {
                     value={data.nationality}
                     placeholder="اختر جنسيتك..."
                     optionValue={ARAB_COUNTRIES}
-                    handleChange={(e) => setData("nationality", e.target.value)}
+                    handleChange={(e) => setData('nationality', e.target.value)}
                 />
 
-                {errors.nationality && <p className="text-xs text-red-500 mt-1">{errors.nationality}</p>}
+                {errors.nationality && (
+                    <p className="mt-1 text-xs text-red-500">
+                        {errors.nationality}
+                    </p>
+                )}
             </div>
         </div>
     );

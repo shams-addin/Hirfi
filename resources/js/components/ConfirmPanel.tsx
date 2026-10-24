@@ -1,4 +1,3 @@
-
 interface ConfirmTypeProps {
     title: string;
     messageOne: string;
@@ -6,28 +5,45 @@ interface ConfirmTypeProps {
     pendingType: boolean;
     processing: boolean;
     displayPanel: (flag: boolean) => void;
-    cancel: () => void
+    cancel: () => void;
 }
 
-export default function ConfirmPanel({ title, messageOne, messageTwo, pendingType, processing, displayPanel, cancel }: ConfirmTypeProps) {
+export default function ConfirmPanel({
+    title,
+    messageOne,
+    messageTwo,
+    pendingType,
+    processing,
+    displayPanel,
+    cancel,
+}: ConfirmTypeProps) {
     return (
-        <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4 animate-in fade-in">
-                <div className="bg-card w-full max-w-sm rounded-2xl p-6 shadow-2xl">
-                    <h3 className="text-xl font-bold mb-3">{title}</h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-                        {pendingType
-                            ? messageOne
-                            : messageTwo}
-                    </p>
-                    <div className="flex gap-3">
-                        <button type="submit" disabled={processing} className="flex-1 bg-primary text-primary-foreground py-2 rounded-lg font-bold hover:bg-primary/90 transition-colors">
-                            تأكيد التغيير
-                        </button>
-                        <button disabled={processing} onClick={() => {displayPanel(false); cancel();}} className="flex-1 bg-muted text-foreground py-2 rounded-lg font-bold hover:bg-muted/80 transition-colors">
-                            إلغاء
-                        </button>
-                    </div>
+        <div className="animate-in fade-in fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
+            <div className="bg-card w-full max-w-sm rounded-2xl p-6 shadow-2xl">
+                <h3 className="mb-3 text-xl font-bold">{title}</h3>
+                <p className="text-muted-foreground mb-6 text-sm leading-relaxed">
+                    {pendingType ? messageOne : messageTwo}
+                </p>
+                <div className="flex gap-3">
+                    <button
+                        type="submit"
+                        disabled={processing}
+                        className="bg-primary text-primary-foreground hover:bg-primary/90 flex-1 rounded-lg py-2 font-bold transition-colors"
+                    >
+                        تأكيد التغيير
+                    </button>
+                    <button
+                        disabled={processing}
+                        onClick={() => {
+                            displayPanel(false);
+                            cancel();
+                        }}
+                        className="bg-muted text-foreground hover:bg-muted/80 flex-1 rounded-lg py-2 font-bold transition-colors"
+                    >
+                        إلغاء
+                    </button>
                 </div>
             </div>
+        </div>
     );
 }

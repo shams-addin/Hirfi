@@ -1,29 +1,44 @@
-import React from "react";
-import ConfirmPanel from "./ConfirmPanel";
+import React from 'react';
+import ConfirmPanel from './ConfirmPanel';
 
 interface ProviderToolsProps {
     providerState: string;
     handleClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-export default function ProviderTools({ providerState, handleClick }: ProviderToolsProps) {
+export default function ProviderTools({
+    providerState,
+    handleClick,
+}: ProviderToolsProps) {
     const MAX_GALLERY = 20;
 
     return (
         <div className="mt-6 space-y-6">
-            <section className="bg-card border border-border rounded-xl shadow-sm p-6 md:p-8">
-            <h3 className="text-xl font-bold font-display mb-1">حالة التوفر</h3>
-            <p className="text-sm text-muted-foreground mb-4">
-                حالتك الحالية: <span className={`font-bold ${providerState === 'busy' ? 'text-destructive-foreground' : 'text-success'}`}>{providerState === 'busy' ? 'مشغول' : 'متفرغ'}</span> — تظهر للعملاء في نتائج البحث وفي صفحتك.
-            </p>
-                <div className="grid grid-cols-2 gap-3 max-w-sm">
-                    {['busy', 'free'].map(state => (
+            <section className="bg-card border-border rounded-xl border p-6 shadow-sm md:p-8">
+                <h3 className="font-display mb-1 text-xl font-bold">
+                    حالة التوفر
+                </h3>
+                <p className="text-muted-foreground mb-4 text-sm">
+                    حالتك الحالية:{' '}
+                    <span
+                        className={`font-bold ${providerState === 'busy' ? 'text-destructive-foreground' : 'text-success'}`}
+                    >
+                        {providerState === 'busy' ? 'مشغول' : 'متفرغ'}
+                    </span>{' '}
+                    — تظهر للعملاء في نتائج البحث وفي صفحتك.
+                </p>
+                <div className="grid max-w-sm grid-cols-2 gap-3">
+                    {['busy', 'free'].map((state) => (
                         <button
                             key={state}
                             onClick={handleClick}
-                            className={`py-3 rounded-lg font-bold border-2 transition-colors ${state !== null
-                                ? (state === 'busy' ? 'border-destructive bg-destructive/10 text-destructive-foreground' : 'border-success bg-success/10 text-success')
-                                : 'border-border hover:bg-muted'}`}
+                            className={`rounded-lg border-2 py-3 font-bold transition-colors ${
+                                state !== null
+                                    ? state === 'busy'
+                                        ? 'border-destructive bg-destructive/10 text-destructive-foreground'
+                                        : 'border-success bg-success/10 text-success'
+                                    : 'border-border hover:bg-muted'
+                            }`}
                         >
                             {state === 'busy' ? 'مشغول' : 'متفرغ'}
                         </button>
@@ -31,9 +46,11 @@ export default function ProviderTools({ providerState, handleClick }: ProviderTo
                 </div>
             </section>
 
-            <section className="bg-card border border-border rounded-xl shadow-sm p-6 md:p-8">
-                <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-xl font-bold font-display">معرض أعمالي</h3>
+            <section className="bg-card border-border rounded-xl border p-6 shadow-sm md:p-8">
+                <div className="mb-4 flex items-center justify-between">
+                    <h3 className="font-display text-xl font-bold">
+                        معرض أعمالي
+                    </h3>
                     {/* <span className="text-sm text-muted-foreground">{provider.gallery.length} / {MAX_GALLERY}</span> */}
                 </div>
                 {/* {uploadMsg && <div className="mb-3 p-3 bg-success/10 text-success rounded-lg flex items-center gap-2 text-sm font-bold"><CheckIcon /> {uploadMsg}</div>}
@@ -42,7 +59,7 @@ export default function ProviderTools({ providerState, handleClick }: ProviderTo
                         {uploadErrors.map((er, i) => <p key={i} className="flex items-center gap-2"><AlertIcon /> {er}</p>)}
                     </div>
                 )} */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
                     {/* {provider.gallery.map((img: any) => (
                         <div key={img.id} className="relative group aspect-square">
                             <img src={img.url} alt={img.name} className="w-full h-full object-cover rounded-lg bg-muted" />

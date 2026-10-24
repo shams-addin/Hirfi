@@ -1,6 +1,6 @@
-import { useState } from "react";
-import FiltersSidebar from "./FiltersSidebar";
-import ProvidersList from "./ProvidersList";
+import { useState } from 'react';
+import FiltersSidebar from './FiltersSidebar';
+import ProvidersList from './ProvidersList';
 
 interface MainGridProps {
     searchResult: string;
@@ -8,13 +8,16 @@ interface MainGridProps {
 
 export default function MainGrid({ searchResult }: MainGridProps) {
     const [filterSpecialty, setFilterSpecialty] = useState(-1);
-    function handleClick(params:number) {
+    function handleClick(params: number) {
         setFilterSpecialty(params);
     }
     return (
-        <div className="flex flex-col lg:flex-row gap-8">
-            <FiltersSidebar filter={filterSpecialty} setFilter={handleClick}/>
-            <ProvidersList searcheResult={searchResult} filterResult={filterSpecialty}/>
+        <div className="flex flex-col gap-8 lg:flex-row">
+            <FiltersSidebar filter={filterSpecialty} setFilter={handleClick} />
+            <ProvidersList
+                searcheResult={searchResult}
+                filterResult={filterSpecialty}
+            />
         </div>
     );
 }
