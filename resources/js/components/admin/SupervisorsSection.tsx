@@ -116,7 +116,7 @@ export default function SupervisorsSection({
                                 }
                                 handleChange={(e) => {
                                     if (mode === 'add') {
-                                        setAdd('firstName', e.target.value)
+                                        setAdd('firstName', e.target.value);
                                     } else {
                                         setEdit('firstName', e.target.value);
                                     }
@@ -276,10 +276,10 @@ export default function SupervisorsSection({
                                 type="button"
                                 className="rounded-xl border border-stone-300 bg-white px-4 py-2 text-sm font-medium text-stone-700 transition hover:bg-stone-50"
                                 onClick={() => {
-                                    if (mode === 'add') { 
-                                        cancelAdd() 
+                                    if (mode === 'add') {
+                                        cancelAdd();
                                     } else {
-                                        cancelEdit()
+                                        cancelEdit();
                                     }
                                     setMode(null);
                                 }}

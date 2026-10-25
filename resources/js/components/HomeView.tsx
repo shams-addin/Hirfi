@@ -5,7 +5,7 @@ import { useForm } from '@inertiajs/react';
 
 export default function HomeView() {
     const [searchTerm, setSearchTerm] = useState('');
-    const {processing} = useForm();
+    const { processing } = useForm();
     return (
         <div className="animate-in fade-in space-y-8 duration-500">
             <section className="bg-primary text-primary-foreground relative overflow-hidden rounded-2xl p-8 shadow-lg md:p-12">
@@ -22,7 +22,12 @@ export default function HomeView() {
                     </p>
 
                     {/* <SearchField searchValue={searchTerm} searchPlaceholder="عن ماذا تبحث؟ (مثال: صيانة تكييف)" handleChange={() => setSearchTerm(searchTerm)} /> */}
-                    <SearchField processing={processing} searchValue={searchTerm} searchPlaceholder="عن ماذا تبحث؟ (مثال: صيانة تكييف)" handleChange={() => setSearchTerm(searchTerm)} />
+                    <SearchField
+                        processing={processing}
+                        searchValue={searchTerm}
+                        searchPlaceholder="عن ماذا تبحث؟ (مثال: صيانة تكييف)"
+                        handleChange={() => setSearchTerm(searchTerm)}
+                    />
                 </div>
             </section>
 

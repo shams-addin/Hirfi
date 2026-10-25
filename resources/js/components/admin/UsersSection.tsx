@@ -16,16 +16,11 @@ type User = {
     account_state: string;
 };
 
-type Provider = {
-    provider_id: number;
-};
-
 interface UsersSectionProps {
     users: User[] | null;
-    providers: Provider[];
 }
 
-export default function UsersSection({ providers, users }: UsersSectionProps) {
+export default function UsersSection({ users }: UsersSectionProps) {
     // const [userToConfirm, setUserToConfirm] = useState<User | null>(null);
     // const { users } = usePage<{users: User[]; provider: Provider}>().props;
     const { data, setData, processing, get } = useForm({ search: '' });

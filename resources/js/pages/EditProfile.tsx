@@ -1,6 +1,6 @@
 import ConfirmPanel from '@/components/ConfirmPanel';
 import ProfilePicture from '@/components/ProfilePicture';
-import ProviderTools from '@/components/ProviderTools';
+// import ProviderTools from '@/components/ProviderTools';
 import StepOne from '@/components/StepOne';
 import StepThree from '@/components/StepThree';
 import StepTwo from '@/components/StepTwo';

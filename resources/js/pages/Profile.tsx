@@ -47,9 +47,11 @@ export default function Profile() {
         return () => window.clearTimeout(timeoutId);
     }, [message]);
 
-    const { user, provider,
+    const {
+        user,
+        // provider,
         //  categories
-         } = usePage<{
+    } = usePage<{
         categories: Category[];
         user: User;
         provider: Provider;

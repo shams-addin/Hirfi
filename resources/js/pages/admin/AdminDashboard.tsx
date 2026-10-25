@@ -27,10 +27,6 @@ type User = {
     account_state: string;
 };
 
-type Provider = {
-    provider_id: number;
-};
-
 type Category = {
     category_id: number;
     category_name: string;
@@ -69,7 +65,6 @@ export default function AdminDashboard() {
     const [section, setSection] = useState<Section>('users');
     const {
         users,
-        providers,
         categories,
         reports,
         supervisors,
@@ -77,7 +72,6 @@ export default function AdminDashboard() {
         permissions,
     } = usePage<{
         users: User[] | null;
-        providers: Provider[];
         categories: Category[];
         reports: Report[];
         supervisors: Supervisor[];
@@ -106,7 +100,7 @@ export default function AdminDashboard() {
     function renderPage(page: string) {
         switch (page) {
             case 'users':
-                return <UsersSection users={users} providers={providers} />;
+                return <UsersSection users={users} />;
 
             case 'categories':
                 return <CategoriesSection categories={categories} />;
@@ -132,7 +126,7 @@ export default function AdminDashboard() {
                 );
 
             default:
-                return <UsersSection users={users} providers={providers} />;
+                return <UsersSection users={users} />;
         }
     }
 
