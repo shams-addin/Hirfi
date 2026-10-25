@@ -41,7 +41,7 @@ class SignUpRequest extends FormRequest
                 'required',
                 'integer',
                 'exists:categories,category_id',
-            ]
+            ],
         ];
     }
 
@@ -61,7 +61,7 @@ class SignUpRequest extends FormRequest
             'address.required' => 'حقل العنوان مطلوب',
             'nationality.required' => 'يجب عليك اختيار الجنسية',
             'accountType.required' => 'اختر نوع الحساب',
-            'serviceType.required' => 'اختر نوع الخدمة'
-            ];
+            'serviceType.required' => 'اختر نوع الخدمة',
+        ];
     }
 }

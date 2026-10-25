@@ -9,7 +9,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 #[Table(key: 'log_id')]
 class AccountStatusLog extends Model
 {
-    public function users() : BelongsTo {
+    /** @return BelongsTo<User, $this> */
+    public function users(): BelongsTo
+    {
         return $this->belongsTo(User::class);
     }
 }

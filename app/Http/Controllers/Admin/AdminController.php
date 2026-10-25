@@ -16,20 +16,21 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class AdminController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): Response
     {
         $users = User::query()->get();
         $categories = Category::query()->get();
         $supervisors = Supervisor::query()->get();
         $permissions = Permission::query()->get();
         $supervisorPermissions = SupervisorPermission::query()->get();
-        
+
         return Inertia::render('admin/AdminDashboard', [
             'users' => $users,
             'categories' => $categories,
@@ -42,7 +43,7 @@ class AdminController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): void
     {
         //
     }
@@ -50,10 +51,10 @@ class AdminController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'categoryName' => ['required', 'string', 'unique:categories,category_name']
+            'categoryName' => ['required', 'string', 'unique:categories,category_name'],
         ], [
             'categoryName.required' => 'يرجى إدخال اسم الفئة',
             'categoryName.unique' => 'اسم الفئة موجود مسبقًا، يرجى إدخال اسم مختلف',
@@ -63,7 +64,7 @@ class AdminController extends Controller
 
         return back()->with('success', 'تم حفظ الفئة بنجاح');
     }
-    
+
     public function storeSupervisor(RegistrationRequest $request): RedirectResponse
     {
         $validated = $request->validated();
@@ -78,7 +79,7 @@ class AdminController extends Controller
 
         return back()->with('success', 'تم إنشاء حساب المشرف بنجاح');
     }
-    
+
     public function updateSupervisor(Request $request, int $id): RedirectResponse
     {
         $validated = $request->validate([
@@ -100,31 +101,35 @@ class AdminController extends Controller
                 'first_name' => $validated['firstName'] ?? null,
                 'second_name' => $validated['secondName'] ?? null,
                 'last_name' => $validated['lastName'] ?? null,
-                'pass_key' => Hash::make($validated['password']) ?? null,
+                'pass_key' => isset($validated['password']) && $validated['password'] !== ''
+                    ? Hash::make($validated['password'])
+                    : null,
                 'phone' => $validated['phone'] ?? null,
-            ], static fn($value) => $value !== null && $value !== '')
-        );
+            ], static fn ($value) => $value !== null && $value !== '')
+            );
 
         return back()->with('success', 'تم تحديث بيانات المشرف');
     }
 
-    public function search(Request $search)
+    public function search(Request $search): Response
     {
         $query = trim($search->input('search'));
 
-        $user = User::where('first_name', 'like', "%{$query}%")
+        $users = User::where('first_name', 'like', "%{$query}%")
             ->orWhere('phone', 'like', "%{$query}%")
             ->get();
-            
-        $provider = Provider::find($user->user_id);
 
-        return Inertia::render('admin/AdminDashboard',[
-            'users' => $user,
-            'provider' => $provider
+        $provider = Provider::query()
+            ->whereIn('provider_id', $users->modelKeys())
+            ->first();
+
+        return Inertia::render('admin/AdminDashboard', [
+            'users' => $users,
+            'provider' => $provider,
         ]);
     }
 
-    public function getReports(Request $request)
+    public function getReports(Request $request): Response
     {
         $filters = $request->validate([
             'type' => ['required'],
@@ -139,15 +144,15 @@ class AdminController extends Controller
             ->orderBydesc('report_date')
             ->get();
 
-        return Inertia::render('admin/AdminDashboard',[
-            'reports' => $reports
+        return Inertia::render('admin/AdminDashboard', [
+            'reports' => $reports,
         ]);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id): void
     {
         //
     }
@@ -155,7 +160,7 @@ class AdminController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id): void
     {
         //
     }
@@ -166,13 +171,13 @@ class AdminController extends Controller
     public function update(Request $request, int $id): RedirectResponse
     {
         $validated = $request->validate([
-            'status' =>[Rule::in(['activated', 'suspended'])]
-            ]);
+            'status' => [Rule::in(['activated', 'suspended'])],
+        ]);
 
         User::where('user_id', $id)
             ->update(['account_state' => $validated['status']]);
-        
-        if ($validated['status'] == 'active' ) {
+
+        if ($validated['status'] == 'active') {
             return redirect('/admin-dashboard')
                 ->with('success', 'تم تفعيل الحساب بنجاح');
         }
@@ -184,7 +189,7 @@ class AdminController extends Controller
     public function updateCategory(Request $request, int $id): RedirectResponse
     {
         $validated = $request->validate([
-            'categoryName' => ['required', 'string', 'unique:categories,category_name']
+            'categoryName' => ['required', 'string', 'unique:categories,category_name'],
         ], [
             'categoryName.required' => 'يرجى إدخال اسم الفئة',
             'categoryName.unique' => 'اسم الفئة موجود مسبقًا، يرجى إدخال اسم مختلف',
@@ -199,7 +204,7 @@ class AdminController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(int $id)
+    public function destroy(int $id): RedirectResponse
     {
         $otherId = Category::where('category_name', 'أخرى')->value('category_id');
 

@@ -12,6 +12,18 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * @property int $user_id
+ * @property string $first_name
+ * @property string|null $last_name
+ * @property string $birth_date
+ * @property string $pass_key
+ * @property string $phone
+ * @property string $address
+ * @property string $nationality
+ * @property string|null $profile_picture
+ * @property string $account_state
+ */
 #[Table(key: 'user_id', timestamps: false)]
 #[Fillable([
     'first_name',
@@ -35,32 +47,38 @@ class User extends Authenticatable
         return $this->pass_key;
     }
 
+    /** @return HasOne<Provider, $this> */
     public function providers(): HasOne
     {
         return $this->hasOne(Provider::class, 'provider_id', 'user_id');
     }
 
+    /** @return HasMany<Request, $this> */
     public function requests(): HasMany
     {
         return $this->hasMany(Request::class, 'customer_id');
     }
 
+    /** @return HasMany<Report, $this> */
     public function reporter(): HasMany
     {
         return $this->hasMany(Report::class, 'reporter_id');
     }
 
+    /** @return HasMany<Report, $this> */
     public function reported(): HasMany
     {
         return $this->hasMany(Report::class, 'reported_id');
     }
 
+    /** @return BelongsToMany<Provider, $this, Rating> */
     public function sendRatings(): BelongsToMany
     {
         return $this->belongsToMany(Provider::class, 'ratings', 'customer_id')
             ->using(Rating::class);
     }
 
+    /** @return HasMany<AccountStatusLog, $this> */
     public function accountStates(): HasMany
     {
         return $this->hasMany(AccountStatusLog::class, 'user_id');

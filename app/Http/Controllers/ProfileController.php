@@ -6,17 +6,19 @@ use App\Models\Category;
 use App\Models\Provider;
 use App\Models\ProviderPhoto;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class ProfileController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): Response
     {
         $user = Auth::user();
         $provider = Provider::query()
@@ -26,29 +28,29 @@ class ProfileController extends Controller
         return Inertia::render('Profile', [
             'user' => [
                 'id' => $user->getAuthIdentifier(),
-                'name' => trim($user->first_name) . ' ' . trim($user?->last_name ?? ''),
+                'name' => trim($user->first_name).' '.trim($user->last_name ?? ''),
                 'birthDate' => $user->birth_date,
                 'phone' => $user->phone,
                 'address' => $user->address,
                 'nationality' => $user->nationality,
                 'profilePicture' => $user?->profile_picture,
             ],
-                'categories' => Category::query()
-                    ->orderBy('category_name')
-                    ->get(['category_id', 'category_name']),
-                'provider' => $provider === null ? null : [
-                        'id' => $provider->provider_id,
-                        'category' => $provider->category_id,
-                        'starAvg' => $provider->star_avg,
-                        'state' => $provider->provider_state,
-                    ],
-                'galleries' => ProviderPhoto::query()
-                    ->with('providers')
-                    ->get()
-                    ->map(fn ($gallery) => [
-                        'id' => $gallery->providers?->provider_id,
-                        'photoNumber' => $gallery->pic_number,
-                        'path' => $gallery->pic,
+            'categories' => Category::query()
+                ->orderBy('category_name')
+                ->get(['category_id', 'category_name']),
+            'provider' => $provider === null ? null : [
+                'id' => $provider->provider_id,
+                'category' => $provider->category_id,
+                'starAvg' => $provider->star_avg,
+                'state' => $provider->provider_state,
+            ],
+            'galleries' => ProviderPhoto::query()
+                ->with('providers')
+                ->get()
+                ->map(fn ($gallery) => [
+                    'id' => $gallery->providers?->provider_id,
+                    'photoNumber' => $gallery->pic_number,
+                    'path' => $gallery->pic,
                 ]),
         ]);
     }
@@ -56,7 +58,7 @@ class ProfileController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): void
     {
         //
     }
@@ -64,7 +66,7 @@ class ProfileController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): void
     {
         //
     }
@@ -72,7 +74,7 @@ class ProfileController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id): void
     {
         //
     }
@@ -80,13 +82,13 @@ class ProfileController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $id)
+    public function edit(User $id): Response
     {
         return Inertia::render('EditProfile', [
             'user' => [
                 'id' => $id->getKey(),
                 'firstName' => $id->first_name,
-                'lastName' => $id?->last_name,
+                'lastName' => $id->last_name,
                 'birthDate' => $id->birth_date,
                 'phone' => $id->phone,
                 'address' => $id->address,
@@ -110,7 +112,7 @@ class ProfileController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $id)
+    public function update(Request $request, User $id): RedirectResponse
     {
         $user = $id;
 
@@ -156,14 +158,14 @@ class ProfileController extends Controller
             ]);
         }
 
-        return redirect('/profile')->with('success', "تم حفظ بيانات الملف الشخصي بنجاح.");
+        return redirect('/profile')->with('success', 'تم حفظ بيانات الملف الشخصي بنجاح.');
 
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id): void
     {
         //
     }

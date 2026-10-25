@@ -18,21 +18,21 @@ return new class extends Migration
             $table->string('last_name')->nullable();
             $table->date('birth_date');
             $table->string('pass_key');
-            $table->string('phone', length:10)->unique();
+            $table->string('phone', length: 10)->unique();
             $table->string('address');
             $table->string('nationality');
             $table->string('profile_picture')->nullable()->default(null);
             $table->enum('account_state', AccountState::cases())->default(AccountState::ACTIVATED);
         });
 
-         Schema::create('sessions', function (Blueprint $table) {
-             $table->string('id')->primary();
-             $table->foreignId('user_id')->nullable()->index();
-             $table->string('ip_address', 45)->nullable();
-             $table->text('user_agent')->nullable();
-             $table->longText('payload');
-             $table->integer('last_activity')->index();
-         });
+        Schema::create('sessions', function (Blueprint $table) {
+            $table->string('id')->primary();
+            $table->foreignId('user_id')->nullable()->index();
+            $table->string('ip_address', 45)->nullable();
+            $table->text('user_agent')->nullable();
+            $table->longText('payload');
+            $table->integer('last_activity')->index();
+        });
     }
 
     /**

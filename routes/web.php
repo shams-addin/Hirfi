@@ -35,7 +35,6 @@ Route::put('/profile/{id}/edit', [ProfileController::class, 'update'])->name('Pr
 Route::get('/request-management', [RequestManagementController::class, 'index'])->middleware('auth');
 Route::put('/request-management/{id}', [RequestManagementController::class, 'update'])->middleware('auth');
 
-
 Route::get('/admin-dashboard', [AdminController::class, 'index'])->middleware('auth');
 Route::get('/admin-dashboard/search', [AdminController::class, 'search'])->middleware('auth');
 Route::put('/admin-dashboard/users/{id}/status', [AdminController::class, 'update'])->middleware('auth');
@@ -46,14 +45,12 @@ Route::get('/admin-dashboard/report', [AdminController::class, 'getReports'])->m
 Route::post('/admin-dashboard/supervisor/add', [AdminController::class, 'storeSupervisor'])->middleware('auth');
 Route::put('/admin-dashboard/supervisor/{id}/edit', [AdminController::class, 'updateSupervisor'])->middleware('auth');
 
-
 Route::get('/sign-up', fn () => Inertia::render('SignUp', [
     'categories' => Category::query()
         ->orderBy('category_name')
         ->get(['category_id', 'category_name']),
 ]))
     ->name('sign-up');
-
 
 Route::post('/sign-up', SignUp::class);
 
@@ -70,4 +67,3 @@ Route::get('/admin-dashboard/login', fn () => Inertia::render('admin/Login'));
 Route::post('/admin-dashboard/login', AuthLogin::class);
 
 Route::post('/admin-dashboard/logout', AuthLogout::class)->middleware('auth');
-

@@ -33,7 +33,7 @@ class Login extends Controller
             $user = User::where('phone', $request->phone)->first();
 
             if ($user && Hash::check($request->password, $user->pass_key)) {
-                if ($user?->account_state === AccountState::SUSPENDED->value) {
+                if ($user->account_state === AccountState::SUSPENDED->value) {
                     return back()->with('error', 'حسابك موقوف، يرجى التواصل مع الإدارة.');
                 }
                 Auth::loginUsingId($user->user_id);

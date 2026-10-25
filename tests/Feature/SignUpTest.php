@@ -7,7 +7,7 @@ it('redirects a newly created user to the home page', function () {
         'birthDate' => '2000-01-01',
         'password' => 'password123',
         'password_confirmation' => 'password123',
-        'phone' => '0501234567',
+        'phone' => '0912345678',
         'address' => 'Tripoli',
         'accountType' => 'customer',
         'nationality' => 'libyan',
@@ -15,7 +15,7 @@ it('redirects a newly created user to the home page', function () {
 
     $response->assertRedirect('/');
     $this->assertDatabaseHas('users', [
-        'phone' => '0501234567',
+        'phone' => '0912345678',
         'first_name' => 'Ahmed',
     ]);
 });

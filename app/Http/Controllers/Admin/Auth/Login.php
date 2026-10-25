@@ -29,15 +29,15 @@ class Login extends Controller
         //     'phone' => $credentials['phone'],
         //     'password' => $credentials['password'],
         // ])) {
-            $supervisor = Supervisor::where('phone', $request->phone)->first();
+        $supervisor = Supervisor::where('phone', $request->phone)->first();
 
-            if ($supervisor && Hash::check($request->password, $supervisor->pass_key)) {
-                Auth::loginUsingId($supervisor->supervisor_id);
-                $request->session()->regenerate();
+        if ($supervisor && Hash::check($request->password, $supervisor->pass_key)) {
+            Auth::loginUsingId($supervisor->supervisor_id);
+            $request->session()->regenerate();
 
-                return redirect()->intended('/admin-dashboard');
-            }
-            
+            return redirect()->intended('/admin-dashboard');
+        }
+
         // }
 
         return back()->with('error', 'بيانات الدخول غير صحيحة.');

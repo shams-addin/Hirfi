@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('second_name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('pass_key');
-            $table->string('phone', length:10)->unique();
+            $table->string('phone', length: 10)->unique();
             $table->string('role'); // for now it's string type
         });
     }

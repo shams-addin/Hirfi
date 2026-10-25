@@ -18,7 +18,7 @@ class HirfiController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): Response
     {
         return Inertia::render('Home', [
             'signedUserId' => Auth::id(),
@@ -29,7 +29,7 @@ class HirfiController extends Controller
                 ->get()
                 ->map(fn ($user) => [
                     'id' => $user->user_id,
-                    'name' => trim($user->first_name).' '.($user?->last_name ?? ''),
+                    'name' => trim($user->first_name).' '.($user->last_name ?? ''),
                 ]),
             'providers' => Provider::query()
                 ->with('users')
@@ -37,7 +37,7 @@ class HirfiController extends Controller
                 ->get()
                 ->map(fn ($provider) => [
                     'id' => $provider->provider_id,
-                    'name' => trim(($provider->users->first_name).' '.($provider->users?->last_name ?? '')),
+                    'name' => trim($provider->users->first_name.' '.($provider->users->last_name ?? '')),
                     'category' => $provider->category_id,
                     'address' => $provider->users?->address,
                     'nationality' => $provider->users->nationality,
@@ -79,7 +79,7 @@ class HirfiController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): void
     {
         //
     }
@@ -87,7 +87,7 @@ class HirfiController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): void
     {
         //
     }
@@ -105,7 +105,7 @@ class HirfiController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id): void
     {
         //
     }
@@ -113,7 +113,7 @@ class HirfiController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id): void
     {
         //
     }
@@ -121,7 +121,7 @@ class HirfiController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id): void
     {
         //
     }

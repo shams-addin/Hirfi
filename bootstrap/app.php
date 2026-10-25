@@ -19,8 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
             AddLinkHeadersForPreloadedAssets::class,
         ]);
 
-        $middleware->redirectGuestsTo(fn (Request $request) =>
-            $request->is('admin-dashboard*')
+        $middleware->redirectGuestsTo(fn (Request $request) => $request->is('admin-dashboard*')
                 ? '/admin-dashboard/login'
                 : '/login'
         );

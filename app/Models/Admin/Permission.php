@@ -13,7 +13,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 )]
 class Permission extends Model
 {
-    public function supervisors(): BelongsToMany {
+    /** @return BelongsToMany<Supervisor, $this> */
+    public function supervisors(): BelongsToMany
+    {
         return $this->belongsToMany(Supervisor::class);
     }
 }

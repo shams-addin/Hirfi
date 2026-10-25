@@ -46,6 +46,6 @@ class RegistrationRequest extends FormRequest
             'phone.digits' => 'رقم الهاتف يجب أن يتكون من 10 أرقام',
             'phone.unique' => 'رقم الهاتف مسجل مسبقاً',
             'phone.starts_with' => 'يجب أن يبدأ رقم الهاتف ب09',
-            ];
+        ];
     }
 }

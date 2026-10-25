@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('ratings', function (Blueprint $table) {
             $table->foreignId('provider_id')->constrained(table: 'providers', column: 'provider_id');
             $table->foreignId('customer_id')->constrained(table: 'users', column: 'user_id');
-            $table->enum('star_number',[0, 1, 2, 3, 4, 5])->default(0);
+            $table->enum('star_number', [0, 1, 2, 3, 4, 5])->default(0);
             $table->text('comment')->nullable();
             $table->timestamp('rating_date')->useCurrent();
 
