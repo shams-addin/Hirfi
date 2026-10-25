@@ -18,7 +18,7 @@ interface ProvidersListProps {
 }
 
 export default function ProvidersList({
-    searcheResult,
+    // searcheResult,
     filterResult,
 }: ProvidersListProps) {
     const { providers } = usePage<{ providers: Provider[] }>().props;

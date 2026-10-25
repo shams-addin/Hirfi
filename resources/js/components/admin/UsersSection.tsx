@@ -1,11 +1,12 @@
-import { useForm, usePage } from '@inertiajs/react';
+// import { useForm, usePage } from '@inertiajs/react';
+import { useForm } from '@inertiajs/react';
 import Card from '../ui/Card';
 import Header from '../ui/Header';
 import React, { useState } from 'react';
 import SearchField from '../SearchField';
 import Empty from '../ui/Empty';
 import Badge from '../Badge';
-import ConfirmPanel from '../ConfirmPanel';
+// import ConfirmPanel from '../ConfirmPanel';
 
 type User = {
     user_id: number;
@@ -30,12 +31,12 @@ export default function UsersSection({ providers, users }: UsersSectionProps) {
     const { data, setData, processing, get } = useForm({ search: '' });
     const [editId, setEditId] = useState<number | null>(null);
     const {
-        data: dataEdit,
+        // data: dataEdit,
         setData: setEdit,
-        errors: errorsEdit,
+        // errors: errorsEdit,
         put,
-        processing: processingEidt,
-        cancel: cancelEdit,
+        // processing: processingEidt,
+        // cancel: cancelEdit,
     } = useForm({
         status: '',
     });
@@ -117,7 +118,7 @@ export default function UsersSection({ providers, users }: UsersSectionProps) {
                                         )}
                                         <button
                                             className={`rounded-xl px-4 py-2 text-sm font-semibold text-white transition ${u.account_state === 'activated' ? 'bg-destructive-foreground hover:bg-rose-700' : 'bg-primary hover:bg-blue-800'}`}
-                                            onClick={(e) => {
+                                            onClick={() => {
                                                 setEdit(
                                                     'status',
                                                     u.account_state ===

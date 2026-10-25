@@ -24,7 +24,7 @@ export default function CategoriesSection({
     const {
         data: categoryData,
         setData: setCategory,
-        cancel: cancelCategory,
+        // cancel: cancelCategory,
         post: postCategory,
         errors: categoryErrors,
         processing: processingCategory,
@@ -47,7 +47,7 @@ export default function CategoriesSection({
     const {
         cancel: cancelDelete,
         delete: sendDelete,
-        errors: errorDelete,
+        // errors: errorDelete,
         processing: processingDelete,
     } = useForm();
 

@@ -6,7 +6,6 @@ import UsersSection from '@/components/admin/UsersSection';
 import Navbar from '@/components/Navbar';
 import TabButton from '@/components/ui/TabButton';
 import { usePage } from '@inertiajs/react';
-import { Wrench } from 'lucide-react';
 import { useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { useEffect } from 'react';

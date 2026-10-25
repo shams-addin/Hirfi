@@ -1,5 +1,5 @@
 import React from 'react';
-import ConfirmPanel from './ConfirmPanel';
+// import ConfirmPanel from './ConfirmPanel';
 
 interface ProviderToolsProps {
     providerState: string;
@@ -10,7 +10,7 @@ export default function ProviderTools({
     providerState,
     handleClick,
 }: ProviderToolsProps) {
-    const MAX_GALLERY = 20;
+    // const MAX_GALLERY = 20;
 
     return (
         <div className="mt-6 space-y-6">

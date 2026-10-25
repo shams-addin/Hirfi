@@ -27,7 +27,7 @@ function isAtLeast18(birthDateValue: string): boolean {
 
 export default function SignUpForm({ categories }: { categories: Category[] }) {
     const [step, setStep] = useState(1);
-    const { data, setData, post, processing, errors, clearErrors, reset } =
+    const { data, setData, post, processing, errors, reset } =
         useForm({
             firstName: '',
             lastName: '',

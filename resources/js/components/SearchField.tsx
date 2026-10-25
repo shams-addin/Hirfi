@@ -1,6 +1,7 @@
-import { MapPin, Search } from 'lucide-react';
+// import { MapPin, Search } from 'lucide-react';
+import { Search } from 'lucide-react';
 import React from 'react';
-import SelectOptions from './ui/SelectOptions';
+// import SelectOptions from './ui/SelectOptions';
 
 interface SearchFieldProps {
     searchValue: string;

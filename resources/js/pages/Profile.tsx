@@ -47,13 +47,15 @@ export default function Profile() {
         return () => window.clearTimeout(timeoutId);
     }, [message]);
 
-    const { user, provider, categories } = usePage<{
+    const { user, provider,
+        //  categories
+         } = usePage<{
         categories: Category[];
         user: User;
         provider: Provider;
     }>().props;
 
-    const isProvider = provider !== null;
+    // const isProvider = provider !== null;
 
     return (
         <div className="animate-in fade-in duration-500">

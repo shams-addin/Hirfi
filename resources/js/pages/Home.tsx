@@ -8,7 +8,7 @@ import { AlertCircle, CheckCircle2 } from 'lucide-react';
 import { usePage } from '@inertiajs/react';
 
 export default function Home() {
-    const [activeTab, setActiveTab] = useState<'home' | 'dashboard'>('home');
+    // const [activeTab, setActiveTab] = useState<'home' | 'dashboard'>('home');
     const { flash } = usePage<{
         flash?: { error?: string; success?: string };
     }>().props;

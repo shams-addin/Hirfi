@@ -1,5 +1,5 @@
 import { useForm } from '@inertiajs/react';
-import { AlertCircleIcon, StarIcon } from 'lucide-react';
+import { StarIcon } from 'lucide-react';
 import { useState } from 'react';
 import TextFeild from './TextFeild';
 
@@ -14,11 +14,11 @@ type Provider = {
     avatar?: string;
 };
 
-type Review = {
-    providerId: number;
-    rating: number;
-    comment: string;
-};
+// type Review = {
+//     providerId: number;
+//     rating: number;
+//     comment: string;
+// };
 
 interface ReviewPanelProps {
     provider: Provider;
@@ -30,7 +30,7 @@ export default function ReviewPanel({
     displayReview,
 }: ReviewPanelProps) {
     const [hover, setHover] = useState(0);
-    const [stars, setStars] = useState(0);
+    // const [stars, setStars] = useState(0);
     const { data, setData, post, processing, errors, reset, cancel } = useForm({
         rating: 0,
         comment: '',

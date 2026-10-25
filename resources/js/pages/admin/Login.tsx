@@ -1,7 +1,7 @@
 import ConfirmButton from '@/components/ui/ConfirmButton';
 import InputField from '@/components/ui/InputField';
 import PasswordField from '@/components/ui/PasswordField';
-import { Link, useForm } from '@inertiajs/react';
+import { useForm } from '@inertiajs/react';
 import { AnimatePresence } from 'framer-motion';
 import { AlertCircle, Phone } from 'lucide-react';
 import { motion } from 'framer-motion';

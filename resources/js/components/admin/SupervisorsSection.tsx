@@ -115,9 +115,11 @@ export default function SupervisorsSection({
                                         : dataEdit.firstName
                                 }
                                 handleChange={(e) => {
-                                    mode === 'add'
-                                        ? setAdd('firstName', e.target.value)
-                                        : setEdit('firstName', e.target.value);
+                                    if (mode === 'add') {
+                                        setAdd('firstName', e.target.value)
+                                    } else {
+                                        setEdit('firstName', e.target.value);
+                                    }
                                 }}
                                 inputPlaceholder="محمد"
                                 className="bg-auth-card border-auth-border focus:ring-auth-accent/50 focus:border-auth-accent w-full rounded-lg border py-3 pr-10 pl-4 text-sm transition-all focus:ring-2 focus:outline-none"
@@ -274,7 +276,11 @@ export default function SupervisorsSection({
                                 type="button"
                                 className="rounded-xl border border-stone-300 bg-white px-4 py-2 text-sm font-medium text-stone-700 transition hover:bg-stone-50"
                                 onClick={() => {
-                                    mode === 'add' ? cancelAdd() : cancelEdit();
+                                    if (mode === 'add') { 
+                                        cancelAdd() 
+                                    } else {
+                                        cancelEdit()
+                                    }
                                     setMode(null);
                                 }}
                             >

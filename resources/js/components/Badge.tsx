@@ -1,4 +1,3 @@
-import { Star } from 'lucide-react';
 import { ReactNode } from 'react';
 
 interface RatingBadgeProps {

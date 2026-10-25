@@ -1,4 +1,5 @@
-import { useForm, usePage } from '@inertiajs/react';
+// import { useForm, usePage } from '@inertiajs/react';
+import { useForm } from '@inertiajs/react';
 import Card from '../ui/Card';
 import Header from '../ui/Header';
 import InputField from '../ui/InputField';

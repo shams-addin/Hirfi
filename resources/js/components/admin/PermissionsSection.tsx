@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import Card from '../ui/Card';
 import Header from '../ui/Header';
-import Empty from '../ui/Empty';
-import { useForm } from '@inertiajs/react';
+// import Empty from '../ui/Empty';
+// import { useForm } from '@inertiajs/react';
 
 type Supervisor = {
     supervisor_id: number;
@@ -35,11 +35,11 @@ export default function PermissionsSection({
     permissions,
 }: PermissionsSectionProps) {
     const [selectId, setSelectId] = useState(1);
-    const { data, setData, put } = useForm({});
-    const current = supervisors.find((s) => s.supervisor_id === selectId);
-    const currentPermission = supervisorPermissions.filter(
-        (sp) => sp.supervisor_id === selectId,
-    );
+    // const { data, setData, put } = useForm({});
+    // const current = supervisors.find((s) => s.supervisor_id === selectId);
+    // const currentPermission = supervisorPermissions.filter(
+    //     (sp) => sp.supervisor_id === selectId,
+    // );
     return (
         <>
             <Header
