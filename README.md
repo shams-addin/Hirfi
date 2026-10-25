@@ -6,9 +6,9 @@
 
 - Git
 - Docker و Docker Compose
-  - Arch Linux: `sudo pacman -S docker docker-compose`
-  - Windows: Docker Desktop مع WSL2 (نفّذ الأوامر من داخل WSL)
-  - macOS: Docker Desktop
+    - Arch Linux: `sudo pacman -S docker docker-compose`
+    - Windows: Docker Desktop مع WSL2 (نفّذ الأوامر من داخل WSL)
+    - macOS: Docker Desktop
 
 بعد تثبيت Docker على Linux، شغّل الخدمة وأضف مستخدمك للمجموعة ثم أعد تسجيل الدخول:
 
@@ -67,13 +67,13 @@ http://localhost
 
 ## أوامر مفيدة
 
-| الأمر | الوظيفة |
-|---|---|
-| `./vendor/bin/sail up -d` | تشغيل الحاويات |
-| `./vendor/bin/sail down` | إيقاف الحاويات |
-| `./vendor/bin/sail artisan migrate` | تنفيذ migrations الجديدة |
+| الأمر                                            | الوظيفة                     |
+| ------------------------------------------------ | --------------------------- |
+| `./vendor/bin/sail up -d`                        | تشغيل الحاويات              |
+| `./vendor/bin/sail down`                         | إيقاف الحاويات              |
+| `./vendor/bin/sail artisan migrate`              | تنفيذ migrations الجديدة    |
 | `./vendor/bin/sail artisan migrate:fresh --seed` | إعادة بناء القاعدة من الصفر |
-| `./vendor/bin/sail test` | تشغيل الاختبارات |
+| `./vendor/bin/sail test`                         | تشغيل الاختبارات            |
 
 ## قواعد العمل في الفريق
 
